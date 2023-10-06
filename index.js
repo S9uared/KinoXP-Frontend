@@ -1,13 +1,16 @@
 import "./navigo_EditedByLars.js"  //Will create the global Navigo, with a few changes, object used below
 
-import {
-    setActiveLink, loadHtml, renderHtml} from "./utils.js"
+import {setActiveLink, loadHtml, renderHtml} from "./utils.js"
+
+
+
 
 
     window.addEventListener("load", async () => {
         
         //Add html pages in this format for client redirect  
         //const templateCars = await loadHtml("./pages/cars/cars.html")
+        const kinoFrontPage = await loadHtml("index.html")
 
          //If token existed, for example after a refresh, set UI accordingly
   const token = localStorage.getItem("token")
@@ -40,15 +43,53 @@ import {
             initKinoFrontPage()
         },
 
-        "/movies": () => {
-        renderHtml(templateCars, "content")
-        initCars()
+        "/program": () => {
+            renderHtml(templateProgram, "content")
+            initCars()
         },
 
-      "/login": () => {
-        renderHtml(templateLogin, "content")
-        initLogin()
-        }
+        "/movie/time" : () => {
+            renderHtml(templateMovieTimes, "content")
+            initMovieTimes()
+        },
+
+        "/movie/seats" : () => {
+            renderHtml(templateMovieSeats, "content")
+            initMovieSeats()
+        },
+
+        "/movie/booking" : () => {
+            renderHtml(templateBooking, "content")
+            initBooking()
+        },
+
+        "/mytickets" : () => {
+            renderHtml(templateMyTickets, "content")
+            initMyTickets()
+        },
+
+        "/employee/login": () => {
+            renderHtml(templateLogin, "content")
+            initLogin()
+        },
+
+        "/employee/program" : () => {
+            renderHtml(templateEmpProgram, "content")
+            initEmpProgram()
+        },
+
+        "/employee/booking" : () => {
+            renderHtml(templateEmpBooking, "content")
+            initEmpBooking()
+        },
+
+        "" : () => {
+
+        },
+
+        "" : () => {
+
+        },
     })
       .notFound(() => {
         renderHtml(templateNotFound, "content")
