@@ -17,7 +17,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light" style="font-size:larger">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#" style="color:lightcoral">Car's 'R' Us</a>
+          <a class="navbar-brand" href="#" style="color:lightcoral">KinoXP</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -27,10 +27,13 @@
               <li class="nav-item active">
                 <a class="nav-link" href="/" data-navigo>Home</a>
               </li>
-              <li class="nav-item dropdown admin-only">
+              <!-- 
+                Drop down in nav bar for future use.
+                Copy this and edit links/names to match correct use
+                <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
                   aria-expanded="false">
-                  Cars (A)
+                  Program
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
                   <li><a class="dropdown-item" href="/find-edit-car" data-navigo>Find/Edit Car</a></li>
@@ -40,32 +43,17 @@
                   </li>
                   <li><a class="dropdown-item" href="/cars" data-navigo>All Cars</a></li>
                 </ul>
+              </li> -->
+              <li class="nav-item ">
+                <a class="nav-link" href="/program" data-navigo>Program</a>
               </li>
-              <li class="nav-item admin-only">
-                <a class="nav-link" href="/members" data-navigo>Members(A)</a>
+              <li class="nav-item ">
+                <a class="nav-link" href="/futuremovies" data-navigo>Future movies</a>
               </li>
     
               <li class="nav-item">
-                <a class="nav-link" href="/signup" data-navigo>Sign up</a>
+                <a class="nav-link" href="/mytickets" data-navigo>My tickets</a>
               </li>
-    
-              <li class="nav-item dropdown user-only">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-                  aria-expanded="false">
-                  Reservation (M)
-                </a>
-                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
-                  <li><a class="dropdown-item" href="/reserve-car" data-navigo>Reserve Cars</a></li>
-                  <li><a class="dropdown-item" href="/reservations" data-navigo>See your reservations</a></li>
-                </ul>
-              </li>
-    
-              <li class="nav-item" id="login-container">
-                <a class="nav-link" href="/login" data-navigo>Login</a>
-            </li>
-            <li class="nav-item" id="logout-container">
-               <a class="nav-link" href="/logout" data-navigo>Logout</a>
-            </li>
            
             </ul>
           </div>
