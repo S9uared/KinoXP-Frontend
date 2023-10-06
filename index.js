@@ -1,6 +1,6 @@
 import "./navigo_EditedByLars.js"  //Will create the global Navigo, with a few changes, object used below
-
 import {setActiveLink, loadHtml, renderHtml} from "./utils.js"
+import { initMovieSeats } from "./pages/showSeats/seats.js";
 
 
 
