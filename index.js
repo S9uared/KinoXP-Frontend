@@ -26,6 +26,7 @@ import {
     })
     .on({
       //For very simple "templates", you can just insert your HTML directly like below
+      //Add ',' between each url redirect.
     //   "/": () => document.getElementById("content").innerHTML = `
     //     <h2>Home</h2>
     //     <img style="width:50%;max-width:600px;margin-top:1em;" src="./images/cars.png">
@@ -33,15 +34,21 @@ import {
     //       Car's 'R' Us - Created, as a help to make GREAT fullstack developers <span style='font-size:2em;'>&#128516;</span>
     //     </p>
     //  `,
+        
+        "/": () => {
+            renderHtml(kinoFrontpage, "content")
+            initKinoFrontPage()
+        },
+
         "/movies": () => {
         renderHtml(templateCars, "content")
         initCars()
-      },
+        },
+
       "/login": () => {
         renderHtml(templateLogin, "content")
         initLogin()
-      }
-    
+        }
     })
       .notFound(() => {
         renderHtml(templateNotFound, "content")
