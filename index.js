@@ -88,14 +88,6 @@ import {setActiveLink, loadHtml, renderHtml} from "./utils.js"
             renderHtml(templateEmpBooking, "content")
             initEmpBooking()
         },
-
-        "" : () => {
-
-        },
-
-        "" : () => {
-
-        },
     })
       .notFound(() => {
         renderHtml(templateNotFound, "content")
