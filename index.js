@@ -10,7 +10,7 @@ import {setActiveLink, loadHtml, renderHtml} from "./utils.js"
         
         //Add html pages in this format for client redirect  
         //const templateCars = await loadHtml("./pages/cars/cars.html")
-        const kinoFrontPage = await loadHtml("index.html")
+        const kinoFrontPage = await loadHtml("./pages/frontpage/frontpage.html")
 
          //If token existed, for example after a refresh, set UI accordingly
   const token = localStorage.getItem("token")
@@ -39,13 +39,13 @@ import {setActiveLink, loadHtml, renderHtml} from "./utils.js"
     //  `,
         
         "/": () => {
-            renderHtml(kinoFrontpage, "content")
-            initKinoFrontPage()
+            renderHtml(templateFrontPage, "content")
+            initFrontPage()
         },
 
         "/program": () => {
             renderHtml(templateProgram, "content")
-            initCars()
+            initProgram()
         },
 
         "/movie/time" : () => {
