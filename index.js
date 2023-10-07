@@ -1,8 +1,6 @@
 import "./navigo_EditedByLars.js"  //Will create the global Navigo, with a few changes, object used below
 import {setActiveLink, loadHtml, renderHtml} from "./utils.js"
-import { initMovieSeats } from "./pages/showSeats/seats.js";
-
-
+import { initMovieSeats } from "./pages/showSeats/seats.js"
 
 
 
@@ -17,7 +15,7 @@ import { initMovieSeats } from "./pages/showSeats/seats.js";
         const templateBooking = await loadHtml("./pages/addBooking/booking.html")
         const templateMyTickets = await loadHtml("./pages/findTickets/findTickets.html")
         const templateLogin = await loadHtml("./pages/login/login.html")
-
+        const templateNotFound = await loadHtml("./pages/notFound/notFound.html")
          //If token existed, for example after a refresh, set UI accordingly
   const token = localStorage.getItem("token")
   toggleLoginStatus(token)
@@ -46,17 +44,17 @@ import { initMovieSeats } from "./pages/showSeats/seats.js";
         
         "/": () => {
             renderHtml(templateFrontPage, "content")
-            initFrontPage()
+            //initFrontPage()
         },
 
         "/program": () => {
             renderHtml(templateProgram, "content")
-            initProgram()
+            //initProgram()
         },
 
         "/movie/time" : () => {
             renderHtml(templateMovieSchedule, "content")
-            initMovieTimes()
+           // initMovieTimes()
         },
 
         "/movie/seats" : () => {
@@ -66,22 +64,22 @@ import { initMovieSeats } from "./pages/showSeats/seats.js";
 
         "/movie/booking" : () => {
             renderHtml(templateBooking, "content")
-            initBooking()
+           // initBooking()
         },
 
         "/mytickets" : () => {
             renderHtml(templateMyTickets, "content")
-            initMyTickets()
+           // initMyTickets()
         },
 
         "/employee/login": () => {
             renderHtml(templateLogin, "content")
-            initLogin()
+           // initLogin()
         },
 
         "/employee/program" : () => {
             renderHtml(templateEmpProgram, "content")
-            initEmpProgram()
+            //initEmpProgram()
         },
 
         "/employee/booking" : () => {
