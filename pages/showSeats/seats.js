@@ -4,7 +4,11 @@ import { handleHttpErrors, makeOptions, sanitizeStringWithTableRows } from '../.
 const url = API_URL + "/seats"
 const reserveSeatList = {}
 const seatsInTheater = {}
-let theater;
+let theater = {
+    rows : 20,
+    seatsPerRow : 12
+}
+
 
 export function initMovieSeats(){
     //Get showingId - Get customer info? Or save that for addBooking page?
