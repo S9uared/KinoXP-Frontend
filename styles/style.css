@@ -1,5 +1,8 @@
 #seats-outerbox{
     display:grid;
+    border-left: 1px solid grey; 
+    border-right: 1px solid grey; 
+    padding:20px;
 }
 .seat-div{
     border: 1px solid grey;
@@ -8,4 +11,5 @@
     margin: 5px 0 0 5px;
     border-radius: 2px 2px 2px 2px;
     background-color: lightgreen;
+    
 }

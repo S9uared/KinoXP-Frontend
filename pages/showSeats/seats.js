@@ -2,7 +2,7 @@ import { API_URL } from '../../settings.js'
 import { handleHttpErrors, makeOptions, sanitizeStringWithTableRows } from '../../utils.js'
 //import {getShowingId} from "../program/program.js"
 const url = API_URL + "/seats"
-const reserveSeatList = []
+
 const seat1 = {
     id : 1,
     row : 1,
@@ -14,82 +14,99 @@ const seat2 = {
     seat : 5
 }
 const seatsInTheater = [seat1, seat2]
-const redSeatsInTheater = []
-
+const redSeatsInTheater = [seat1]
+const reserveSeatList = []
 let theater = {
-    rows : 20,
-    seatsPerRow : 12
-}
+    id: 1,
+    rows: 25,
+    seatsPerRow: 16
+};
 
+
+//Works with template objects as data right now. Need to figure out fetch and why the data returned does not work as intended
 
 export function initMovieSeats(){
     //Get showingId - Get customer info? Or save that for addBooking page?
     const seatOuterBox = document.getElementById("seats-outerbox")
-    //getTheaterSetup(getShowingId())
+    //getTheaterSetup(getShowingId()) //Add  later
     
-
-    setupSeatOuterBox(seatOuterBox, theater.rows, theater.seatsPerRow)
+    setupSeatOuterBox(seatOuterBox, theater)
     seatOuterBox.innerHTML = createSeatVisual()
     seatOuterBox.addEventListener("click", UpdateSeatList)
-
+    findOccupiedSeats();//add showingID parameter to fetch
 }
+
 
 function createSeatVisual(){
-    const seatVisual = seatsInTheater.map(seat => `<div class="seat-div" id=${seat.id}></div>`).join("")
+    const seatVisual = seatsInTheater.map(seat => 
+        `<div class="seat-div" id=${seat.id}></div>`)
+        .join("")
     return seatVisual;
-    //go through list of seats. Maybe sort it first. Create divs with different ids. Return this long div string at the end. 
 }
 
-function setupSeatOuterBox(seatOuterBox, rows, seatsPerRow){
+async function findOccupiedSeats(){ //Add showingId parameter to fetch
+    // const resUrl = API_URL+"/reservations/showing/"+showingId
+    // redSeatsInTheater = await fetch(resUrl).then(handleHttpErrors)
+    
+    redSeatsInTheater.map(seat => document.getElementById(seat.id).style.backgroundColor = "red")
+}
+
+function setupSeatOuterBox(seatOuterBox, theater){
     //Assuming each seat needs a 20px width/height box, and a little extra for space between seats.
     //Adjust accordingly
-    const boxWidth = (seatsPerRow*30)+50+"px";
-    const boxHeight = (rows*30)+50+"px";
+    const boxWidth = (theater.seatsPerRow*30)+50+"px";
+    const boxHeight = (theater.rows*30)+50+"px";
     seatOuterBox.style.width = boxWidth;
     seatOuterBox.style.height = boxHeight;
-    const boxColumns = "repeat("+seatsPerRow+", 1fr)";
-    const boxRows = "repeat("+rows+", 1fr)";
+    const boxColumns = "repeat("+theater.seatsPerRow+", 1fr)";
+    const boxRows = "repeat("+theater.rows+", 1fr)";
     seatOuterBox.style.gridTemplateColumns = boxColumns;
     seatOuterBox.style.gridTemplateRows = boxRows;
 }  
 
 
-function getTheaterSetup(showId){
-    const showing = fetchShow(showId)
-    fetchTheater(showing.theaterId)
-    fetchSeatsInTheater(showing.theaterId)
+function getTheaterSetup(){
+        //const showing = await fetchShow(showId)
+        theater = fetchTheater(1)
+        fetchSeatsInTheater(1)
+      
 }
 
 async function fetchShow(showId){
-    let showUrl = API_URL + "/" +showId;
+    let showUrl = API_URL + "/showings/" +showId;
     let showing = await fetch(showUrl).then(handleHttpErrors)
     return showing;
 }
 
 async function fetchTheater(theaterId){
     const theaterUrl = API_URL + "/theaters/"+theaterId
-    theater = await fetch(theaterUrl).then(handleHttpErrors)
+    const theater = await fetch(theaterUrl).then(handleHttpErrors);
+    return theater;
 }
 
 async function fetchSeatsInTheater(theaterId){
     const tempUrl = url + "/theater/"+theaterId
-    seatsInTheater = await fetch(tempUrl).handleHttpErrors;
+    seatsInTheater = await fetch(tempUrl).then(handleHttpErrors);
 }
 
 function UpdateSeatList(event){
     const clickedSeat = event.target;
-    if(clickedSeat.style.backgroundColor === "red"){
+    //Gets styles from stylesheet too
+    const computedStyle = window.getComputedStyle(clickedSeat)
+    if(computedStyle.backgroundColor === "rgb(255, 0, 0)"){
         console.log("Seat already reserved, sorry")
     }
-    if(clickedSeat.style.backgroundColor === "lightgreen"){
+    else if(computedStyle.backgroundColor === "rgb(144, 238, 144)"){
         clickedSeat.style.backgroundColor = "blue";
-        reserveSeatList.add(clickedSeat.id);
+        reserveSeatList.push(clickedSeat.id);
     }
-    if(clickedSeat.style.backgroundColor === "blue"){
+    else if(computedStyle.backgroundColor === "rgb(0, 0, 255)"){
         clickedSeat.style.backgroundColor = "lightgreen";
-        reserveSeatList.delete(clickedSeat.id);
+        const indexToDelete = reserveSeatList.indexOf(clickedSeat.id)
+        reserveSeatList.splice(indexToDelete, 1)
     }
-
+    reserveSeatList.sort();
+    console.log(reserveSeatList)
 }
 
 export function getSeatList(){
