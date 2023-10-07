@@ -25,12 +25,13 @@ let theater = {
 export function initMovieSeats(){
     //Get showingId - Get customer info? Or save that for addBooking page?
     const seatOuterBox = document.getElementById("seats-outerbox")
-    seatOuterBox.addEventListener("click", UpdateSeatList)
     //getTheaterSetup(getShowingId())
     
 
     setupSeatOuterBox(seatOuterBox, theater.rows, theater.seatsPerRow)
     seatOuterBox.innerHTML = createSeatVisual()
+    seatOuterBox.addEventListener("click", UpdateSeatList)
+
 }
 
 function createSeatVisual(){
@@ -77,17 +78,18 @@ async function fetchSeatsInTheater(theaterId){
 
 function UpdateSeatList(event){
     const clickedSeat = event.target;
-    if(clickedSeat.style.backgroundColor === red){
+    if(clickedSeat.style.backgroundColor === "red"){
         console.log("Seat already reserved, sorry")
     }
-    if(clickedSeat.style.backgroundColor === green){
+    if(clickedSeat.style.backgroundColor === "lightgreen"){
+        clickedSeat.style.backgroundColor = "blue";
         reserveSeatList.add(clickedSeat.id);
-        clickedSeat.style.color = blue;
     }
-    if(clickedSeat.style.backgroundColor === blue){
-        reserveSeatList.remove(clickedSeat.id);
-        clickedSeat.style.color = red;
+    if(clickedSeat.style.backgroundColor === "blue"){
+        clickedSeat.style.backgroundColor = "lightgreen";
+        reserveSeatList.delete(clickedSeat.id);
     }
+
 }
 
 export function getSeatList(){
