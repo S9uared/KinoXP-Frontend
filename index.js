@@ -18,7 +18,7 @@ import { initMovieSeats } from "./pages/showSeats/seats.js"
         const templateNotFound = await loadHtml("./pages/notFound/notFound.html")
          //If token existed, for example after a refresh, set UI accordingly
   const token = localStorage.getItem("token")
-  toggleLoginStatus(token)
+  //toggleLoginStatus(token)
 
  const router = new Navigo("/", { hash: true });
   //Not especially nice, BUT MEANT to simplify things. Make the router global so it can be accessed from all js-files
@@ -84,7 +84,7 @@ import { initMovieSeats } from "./pages/showSeats/seats.js"
 
         "/employee/booking" : () => {
             renderHtml(templateEmpBooking, "content")
-            initEmpBooking()
+            //initEmpBooking()
         },
     })
       .notFound(() => {
