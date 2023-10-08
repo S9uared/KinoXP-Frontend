@@ -2,16 +2,10 @@ import { API_URL } from '../../settings.js'
 import { handleHttpErrors, makeOptions, sanitizeStringWithTableRows } from '../../utils.js'
 //import {getShowingId} from "../program/program.js"
 const url = API_URL + "/seats"
-const seatsInTheater = []
-const redSeatsInTheater = []
 const reserveSeatList = []
 let seatOuterBox;
-const theater = {
-    id : 1,
-    rows : 10,
-    seatsPerRow: 10
-}
-
+let theater;
+let showing; 
 
 export function getSeatList(){
     return reserveSeatList;
@@ -19,69 +13,54 @@ export function getSeatList(){
 
 //Works with template objects as data right now. Need to figure out fetch and why the data returned does not work as intended
 
-export function initMovieSeats(){
-    //Get showingId - Get customer info? Or save that for addBooking page?
+export async function initMovieSeats(){
     seatOuterBox = document.getElementById("seats-outerbox")
     seatOuterBox.addEventListener("click", UpdateSeatList)
-    window.addEventListener('unhandledrejection', function (event) {
-        console.error('Unhandled promise rejection:', event.reason);
-    });
-    document.addEventListener("DOMContentLoaded", function() {
-        document.getElementById(402).style.backgroundColor = "rgb(255, 0, 0)";
-    });
     
-    //getTheaterSetup(getShowingId()) //Add  later
-    fetchTheater(1) //This line is instead of function above. Remove when showings can be fetched
-    setupSeats()
-    findOccupiedSeats(1)//add showingID parameter to fetch
-    
+    //Get showingId function - Get customer info? Or save that for addBooking page?
+
+    try{
+        setupSeats(1)//Show id add here
+        document.getElementById(802).style.backgroundColor = "red";
+    }
+    catch(error){
+        console.error(error)
+    }
+
 }
 
-async function findOccupiedSeats(showingId){ //Add showingId parameter to fetch
-    // const resUrl = API_URL+"/reservations/showing/"+showingId
-    // const data = await fetch(resUrl).then(handleHttpErrors)
-    // if(data instanceof Array && data.length>0){
-    //     redSeatsInTheater.map(seat => document.getElementById(seat.id).style.backgroundColor = "rgb(255, 0, 0)")
-    // }
-    // else if(data instanceof Object){
-        
-    //     console.log("Only one seat found")
-    // }
-    // else{
-    //     console.log("No reserved seats for this showing yet")
-    // }
-    //document.getElementById(402).style.backgroundColor = "rgb(255, 0, 0)";
-}
 
-function setupSeats(){
+async function setupSeats(showId){
     //Assuming each seat needs a 20px width/height box, and a little extra for space between seats.
-    //Adjust accordingly
+    
+    try{
+        showing = fetchShow(showId)
+        theater = await fetchTheater(1)//showing.theaterId
+        fetchSeatsInTheater(showing) //give showing alongside
+    }
+    catch(eror){
+        console.error(error)
+    }
     const boxWidth = 7+`${theater.seatsPerRow}px`;
     const boxHeight = 8+`${theater.rows}px`;
     seatOuterBox.style.width = boxWidth;
     seatOuterBox.style.height = boxHeight;
 
-    const boxColumns = `repeat(${theater.seatsPerRow}, 1fr)`; 
-    const boxRows = `repeat(${theater.rows}, 1fr)`;
-    seatOuterBox.style.gridTemplateColumns = "repeat(16, 1fr)";
-    seatOuterBox.style.gridTemplateRows = "repeat(25, 1fr)";
+    const boxColumns = theater.seatsPerRow; 
+    const boxRows = theater.rows;
+    seatOuterBox.style.gridTemplateColumns = "repeat("+boxColumns+", 1fr)";
+    seatOuterBox.style.gridTemplateRows = "repeat("+boxRows+", 1fr)";
 
-    fetchSeatsInTheater(1)
+    
 
     
      //theater.id sættes ind her - 1 er som test data
     
 }  
 
-
-async function getTheaterSetup(showId){
-        const showing = await fetchShow(showId)
-        theater = fetchTheater(1) //Add showing.theaterId here
-}
-
-async function fetchShow(showId){
+function fetchShow(showId){
     let showUrl = API_URL + "/showings/" +showId;
-    const data = await fetch(showUrl).then(handleHttpErrors)
+    const data = fetch(showUrl).then(handleHttpErrors)
     const showing = {
         id : data.id,
         theaterId : data.theaterId,
@@ -96,21 +75,37 @@ async function fetchShow(showId){
 async function fetchTheater(theaterId){
     const theaterUrl = API_URL + "/theaters/"+theaterId
     const data = await fetch(theaterUrl).then(handleHttpErrors);
-    theater.id = data.id
-    theater.rows = data.rows
-    theater.seatsPerRow = data.seatsPerRow
-    console.log(theater);
+    const theaterData = data;
+    return theaterData;
 }
 
-async function fetchSeatsInTheater(theaterId){
-    const tempUrl = url + "/theater/"+theaterId
-    const data = await fetch(tempUrl).then(handleHttpErrors);
-    const seatVisual = data.map(seat => 
-        `<div class="seat-div" id=${seat.id}></div>`)
-        .join("")
-    seatOuterBox.innerHTML = seatVisual;
+async function fetchSeatsInTheater(showing){
+    const tempUrl = url + "/theater/"+showing.theaterId
+    try{
+        const seatData = await fetch(tempUrl).then(handleHttpErrors);
+        const reservedData = await findOccupiedSeats(showing.id);
+        const reservedIds = reservedData.map(seat => seat.seatId);
+        
+        const seatVisual = data.map(seat => {
+
+            const isReserved = reservedIds.includes(seat.id);
+            const backgroundColor = isReserved ? `red` : `lightgreen`;
+
+            return `<div class="seat-div" id=${seat.id} style="background-color: ${backgroundColor}"></div>`
+            })
+            .join("");
+        
+        seatOuterBox.innerHTML = seatVisual;
+    }catch(error){
+        console.error(error)
+    }
 }
 
+async function findOccupiedSeats(showingId){ //Add showingId parameter to fetch
+    const resUrl = API_URL+"/reservations/showing/"+showingId
+    const occupiedSeats = await fetch(resUrl).then(handleHttpErrors);
+    return occupiedSeats;
+}
 function UpdateSeatList(event){
     const clickedSeat = event.target;
     //Gets styles from stylesheet too
