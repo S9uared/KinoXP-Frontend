@@ -16,6 +16,7 @@ const seat2 = {
 const seatsInTheater = [seat1, seat2]
 const redSeatsInTheater = [seat1]
 const reserveSeatList = []
+let seatOuterBox;
 let theater = {
     id: 1,
     rows: 25,
@@ -23,25 +24,24 @@ let theater = {
 };
 
 
+export function getSeatList(){
+    return reserveSeatList;
+}
+
 //Works with template objects as data right now. Need to figure out fetch and why the data returned does not work as intended
 
 export function initMovieSeats(){
     //Get showingId - Get customer info? Or save that for addBooking page?
-    const seatOuterBox = document.getElementById("seats-outerbox")
-    //getTheaterSetup(getShowingId()) //Add  later
-    
-    setupSeatOuterBox(seatOuterBox, theater)
-    seatOuterBox.innerHTML = createSeatVisual()
+    seatOuterBox = document.getElementById("seats-outerbox")
     seatOuterBox.addEventListener("click", UpdateSeatList)
-    findOccupiedSeats();//add showingID parameter to fetch
-}
+    
+    
+    //getTheaterSetup(getShowingId()) //Add  later
+    theater = fetchTheater(1) //This line is instead of function above. Remove when showings can be fetched
 
 
-function createSeatVisual(){
-    const seatVisual = seatsInTheater.map(seat => 
-        `<div class="seat-div" id=${seat.id}></div>`)
-        .join("")
-    return seatVisual;
+
+    setupSeats(theater)
 }
 
 async function findOccupiedSeats(){ //Add showingId parameter to fetch
@@ -51,7 +51,7 @@ async function findOccupiedSeats(){ //Add showingId parameter to fetch
     redSeatsInTheater.map(seat => document.getElementById(seat.id).style.backgroundColor = "red")
 }
 
-function setupSeatOuterBox(seatOuterBox, theater){
+function setupSeats(theater){
     //Assuming each seat needs a 20px width/height box, and a little extra for space between seats.
     //Adjust accordingly
     const boxWidth = (theater.seatsPerRow*30)+50+"px";
@@ -62,31 +62,49 @@ function setupSeatOuterBox(seatOuterBox, theater){
     const boxRows = "repeat("+theater.rows+", 1fr)";
     seatOuterBox.style.gridTemplateColumns = boxColumns;
     seatOuterBox.style.gridTemplateRows = boxRows;
+
+    fetchSeatsInTheater(1) //theater.id sættes ind her - 1 er som test data
+    findOccupiedSeats();//add showingID parameter to fetch
 }  
 
 
-function getTheaterSetup(){
-        //const showing = await fetchShow(showId)
-        theater = fetchTheater(1)
-        fetchSeatsInTheater(1)
-      
+async function getTheaterSetup(showId){
+        const showing = await fetchShow(showId)
+        theater = fetchTheater(1) //Add showing.theaterId here
 }
 
 async function fetchShow(showId){
     let showUrl = API_URL + "/showings/" +showId;
-    let showing = await fetch(showUrl).then(handleHttpErrors)
+    const data = await fetch(showUrl).then(handleHttpErrors)
+    const showing = {
+        id : data.id,
+        theaterId : data.theaterId,
+        movieId : data.movieId,
+        date : data.date,
+        time : data.time,
+        type : data.type
+    }
     return showing;
 }
 
 async function fetchTheater(theaterId){
     const theaterUrl = API_URL + "/theaters/"+theaterId
-    const theater = await fetch(theaterUrl).then(handleHttpErrors);
-    return theater;
+    const data = await fetch(theaterUrl).then(handleHttpErrors);
+    const newTheater = {
+        id : data.id,
+        rows : data.rows,
+        seatsPerRow : data.seatsPerRow
+    }
+    return newTheater;
 }
 
 async function fetchSeatsInTheater(theaterId){
     const tempUrl = url + "/theater/"+theaterId
-    seatsInTheater = await fetch(tempUrl).then(handleHttpErrors);
+    const data = await fetch(tempUrl).then(handleHttpErrors);
+    const seatVisual = data.map(seat => 
+        `<div class="seat-div" id=${seat.id}></div>`)
+        .join("")
+    seatOuterBox.innerHTML = seatVisual;
 }
 
 function UpdateSeatList(event){
@@ -107,10 +125,6 @@ function UpdateSeatList(event){
     }
     reserveSeatList.sort();
     console.log(reserveSeatList)
-}
-
-export function getSeatList(){
-    return reserveSeatList;
 }
 
 
