@@ -21,7 +21,6 @@ export async function initMovieSeats(){
 
     try{
         setupSeats(1)//Show id add here
-        document.getElementById(802).style.backgroundColor = "red";
     }
     catch(error){
         console.error(error)
@@ -34,11 +33,11 @@ async function setupSeats(showId){
     //Assuming each seat needs a 20px width/height box, and a little extra for space between seats.
     
     try{
-        showing = fetchShow(showId)
+        showing = await fetchShow(showId)
         theater = await fetchTheater(1)//showing.theaterId
         fetchSeatsInTheater(showing) //give showing alongside
     }
-    catch(eror){
+    catch(error){
         console.error(error)
     }
     const boxWidth = 7+`${theater.seatsPerRow}px`;
@@ -51,24 +50,15 @@ async function setupSeats(showId){
     seatOuterBox.style.gridTemplateColumns = "repeat("+boxColumns+", 1fr)";
     seatOuterBox.style.gridTemplateRows = "repeat("+boxRows+", 1fr)";
 
-    
 
-    
      //theater.id sættes ind her - 1 er som test data
     
 }  
 
-function fetchShow(showId){
+async function fetchShow(showId){
     let showUrl = API_URL + "/showings/" +showId;
-    const data = fetch(showUrl).then(handleHttpErrors)
-    const showing = {
-        id : data.id,
-        theaterId : data.theaterId,
-        movieId : data.movieId,
-        date : data.date,
-        time : data.time,
-        type : data.type
-    }
+    const data = await fetch(showUrl).then(handleHttpErrors)
+    const showing = data;
     return showing;
 }
 
@@ -83,10 +73,10 @@ async function fetchSeatsInTheater(showing){
     const tempUrl = url + "/theater/"+showing.theaterId
     try{
         const seatData = await fetch(tempUrl).then(handleHttpErrors);
-        const reservedData = await findOccupiedSeats(showing.id);
-        const reservedIds = reservedData.map(seat => seat.seatId);
+        const reservationData = await findOccupiedSeats(showing.id);
+        const reservedIds = reservationData.flatMap(reservation => reservation.seats.map(seat => seat.id));
         
-        const seatVisual = data.map(seat => {
+        const seatVisual = seatData.map(seat => {
 
             const isReserved = reservedIds.includes(seat.id);
             const backgroundColor = isReserved ? `red` : `lightgreen`;
