@@ -24,6 +24,7 @@ window.addEventListener("load", async () => {
   toggleLoginStatus(token);
 
   const router = new Navigo("/", { hash: true });
+
   //Not especially nice, BUT MEANT to simplify things. Make the router global so it can be accessed from all js-files
   window.router = router;
 
@@ -37,13 +38,44 @@ window.addEventListener("load", async () => {
     .on({
       //For very simple "templates", you can just insert your HTML directly like below
       //Add ',' between each url redirect.
-      //   "/": () => document.getElementById("content").innerHTML = `
-      //     <h2>Home</h2>
-      //     <img style="width:50%;max-width:600px;margin-top:1em;" src="./images/cars.png">
-      //     <p style='margin-top:1em;font-size: 1.5em;color:darkgray;'>
-      //       Car's 'R' Us - Created, as a help to make GREAT fullstack developers <span style='font-size:2em;'>&#128516;</span>
-      //     </p>
-      //  `,
+
+    //   "/": () => document.getElementById("content").innerHTML = `
+    //     <h2>Home</h2>
+    //     <img style="width:50%;max-width:600px;margin-top:1em;" src="./images/cars.png">
+    //     <p style='margin-top:1em;font-size: 1.5em;color:darkgray;'>
+    //       Car's 'R' Us - Created, as a help to make GREAT fullstack developers <span style='font-size:2em;'>&#128516;</span>
+    //     </p>
+    //  `,
+        
+        "/": () => {
+            renderHtml(templateFrontPage, "content")
+            //initFrontPage()
+        },
+
+        "/program": () => {
+            renderHtml(templateProgram, "content")
+            //initProgram()
+        },
+
+        "/movie/time" : () => {
+            renderHtml(templateMovieSchedule, "content")
+           // initMovieTimes()
+        },
+
+        "/movie/page" : () => {
+          renderHtml(templateMovieSchedule, "content")
+         // initMovieTimes()
+      },
+
+        "/movie/seats" : () => {
+            renderHtml(templateMovieSeats, "content")
+            initMovieSeats()
+        },
+
+        "/movie/booking" : () => {
+            renderHtml(templateBooking, "content")
+           // initBooking()
+        },
 
       "/": () => {
         renderHtml(templateFrontPage, "content");
@@ -86,6 +118,7 @@ window.addEventListener("load", async () => {
         logout();
       },
     })
+
     .notFound(() => {
       renderHtml(templateNotFound, "content");
     })
