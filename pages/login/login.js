@@ -45,14 +45,14 @@ async function login() {
     localStorage.removeItem("user")
     localStorage.removeItem("roles")
     toggleLoginStatus(false)
-    window.router.navigate("/login")
+    window.router.navigate("/employee/login")
   }
   
   export function toggleLoginStatus(loggedIn) {
     //Hide or show all menu-links depending on login status
     // document.getElementById("login-container").style.display = loggedIn ? "none" : "block"
-    // document.getElementById("logout-container").style.display = loggedIn ? "block" : "none"
     
+    document.getElementById("logout-btn").style.display = loggedIn ? "block" : "none"
     
     const adminListItems = document.querySelectorAll('.admin-only');
     const userRoutes = document.querySelector('.user-only');
@@ -65,7 +65,7 @@ async function login() {
     for (var i = 0; i < adminListItems.length; i++) {
       adminListItems[i].style.display = isAdmin ? "block" : 'none'; // or any other value you want
     }
-    userRoutes.style.display = isUser ? 'block' : 'none';
+    //userRoutes.style.display = isUser ? 'block' : 'none';
     
   }
   
