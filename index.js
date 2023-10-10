@@ -2,6 +2,7 @@ import "./navigo_EditedByLars.js"  //Will create the global Navigo, with a few c
 import {setActiveLink, loadHtml, renderHtml} from "./utils.js"
 import { initMovieSeats } from "./pages/showSeats/seats.js"
 import { initLogin, logout, toggleLoginStatus } from "./pages/login/login.js";
+import { initStatistics } from "./pages/showStatistic/statistic.js";
 
 
     window.addEventListener("load", async () => {
@@ -13,7 +14,7 @@ import { initLogin, logout, toggleLoginStatus } from "./pages/login/login.js";
         const templateMovieSchedule = await loadHtml("./pages/showMovieSchedule/schedule.html")
         const templateMovieSeats = await loadHtml("./pages/showSeats/seats.html")
         const templateBooking = await loadHtml("./pages/addBooking/booking.html")
-        const templateMyTickets = await loadHtml("./pages/findTickets/findTickets.html")
+        const templateStatistic = await loadHtml("./pages/showStatistic/statistic.html")
         const templateLogin = await loadHtml("./pages/login/login.html")
         const templateNotFound = await loadHtml("./pages/notFound/notFound.html")
         //If token existed, for example after a refresh, set UI accordingly
@@ -76,10 +77,9 @@ import { initLogin, logout, toggleLoginStatus } from "./pages/login/login.js";
             renderHtml(templateEmpProgram, "content")
             //initEmpProgram()
         },
-
-        "/employee/booking" : () => {
-            renderHtml(templateEmpBooking, "content")
-            //initEmpBooking()
+        "/statistics" : () => {
+            renderHtml(templateStatistic, "content")
+            initStatistics()
         },
         "/logout": () => {
           renderHtml(templateLogin, "content")
