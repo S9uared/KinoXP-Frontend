@@ -1,7 +1,7 @@
 import "./navigo_EditedByLars.js"  //Will create the global Navigo, with a few changes, object used below
 import {setActiveLink, loadHtml, renderHtml} from "./utils.js"
 import { initMovieSeats } from "./pages/showSeats/seats.js"
-
+import { initLogin, logout, toggleLoginStatus } from "./pages/login/login.js";
 
 
     window.addEventListener("load", async () => {
@@ -16,9 +16,9 @@ import { initMovieSeats } from "./pages/showSeats/seats.js"
         const templateMyTickets = await loadHtml("./pages/findTickets/findTickets.html")
         const templateLogin = await loadHtml("./pages/login/login.html")
         const templateNotFound = await loadHtml("./pages/notFound/notFound.html")
-         //If token existed, for example after a refresh, set UI accordingly
-  const token = localStorage.getItem("token")
-  //toggleLoginStatus(token)
+        //If token existed, for example after a refresh, set UI accordingly
+        const token = localStorage.getItem("token")
+        //toggleLoginStatus(token)
 
  const router = new Navigo("/", { hash: true });
   //Not especially nice, BUT MEANT to simplify things. Make the router global so it can be accessed from all js-files
@@ -74,7 +74,7 @@ import { initMovieSeats } from "./pages/showSeats/seats.js"
 
         "/employee/login": () => {
             renderHtml(templateLogin, "content")
-           // initLogin()
+            initLogin()
         },
 
         "/employee/program" : () => {
@@ -86,6 +86,10 @@ import { initMovieSeats } from "./pages/showSeats/seats.js"
             renderHtml(templateEmpBooking, "content")
             //initEmpBooking()
         },
+        "/logout": () => {
+          renderHtml(templateLogin, "content")
+          logout()
+        }
     })
       .notFound(() => {
         renderHtml(templateNotFound, "content")
