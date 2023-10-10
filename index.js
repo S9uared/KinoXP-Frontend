@@ -2,6 +2,7 @@ import "./navigo_EditedByLars.js"; //Will create the global Navigo, with a few c
 import { setActiveLink, loadHtml, renderHtml } from "./utils.js";
 import { initMovieSeats } from "./pages/showSeats/seats.js";
 import { initProgram } from "./pages/program/program.js";
+import { initLogin, logout, toggleLoginStatus } from "./pages/login/login.js";
 
 window.addEventListener("load", async () => {
   //Add html pages in this format for client redirect
@@ -20,7 +21,7 @@ window.addEventListener("load", async () => {
   const templateNotFound = await loadHtml("./pages/notFound/notFound.html");
   //If token existed, for example after a refresh, set UI accordingly
   const token = localStorage.getItem("token");
-  //toggleLoginStatus(token)
+  toggleLoginStatus(token);
 
   const router = new Navigo("/", { hash: true });
   //Not especially nice, BUT MEANT to simplify things. Make the router global so it can be accessed from all js-files
@@ -48,45 +49,41 @@ window.addEventListener("load", async () => {
         renderHtml(templateFrontPage, "content");
         //initFrontPage()
       },
-
       "/program": () => {
         renderHtml(templateProgram, "content");
         initProgram();
       },
-
       "/movie/time": () => {
         renderHtml(templateMovieSchedule, "content");
         // initMovieTimes()
       },
-
       "/movie/seats": () => {
         renderHtml(templateMovieSeats, "content");
         initMovieSeats();
       },
-
       "/movie/booking": () => {
         renderHtml(templateBooking, "content");
         // initBooking()
       },
-
       "/mytickets": () => {
         renderHtml(templateMyTickets, "content");
         // initMyTickets()
       },
-
       "/employee/login": () => {
         renderHtml(templateLogin, "content");
-        // initLogin()
+        initLogin();
       },
-
       "/employee/program": () => {
         renderHtml(templateEmpProgram, "content");
         //initEmpProgram()
       },
-
       "/employee/booking": () => {
         renderHtml(templateEmpBooking, "content");
         //initEmpBooking()
+      },
+      "/logout": () => {
+        renderHtml(templateLogin, "content");
+        logout();
       },
     })
     .notFound(() => {
