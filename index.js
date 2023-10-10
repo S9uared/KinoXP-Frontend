@@ -12,13 +12,13 @@ import { initMovieSeats } from "./pages/showSeats/seats.js"
         const templateProgram = await loadHtml("./pages/program/program.html")
         const templateMovieSchedule = await loadHtml("./pages/showMovieSchedule/schedule.html")
         const templateMovieSeats = await loadHtml("./pages/showSeats/seats.html")
-        const templateBooking = await loadHtml("./pages/addBooking/booking.html")
+        const templateBooking = await loadHtml("./pages/addReservation/addReservation.html")
         const templateMyTickets = await loadHtml("./pages/findTickets/findTickets.html")
         const templateLogin = await loadHtml("./pages/login/login.html")
         const templateNotFound = await loadHtml("./pages/notFound/notFound.html")
          //If token existed, for example after a refresh, set UI accordingly
   const token = localStorage.getItem("token")
-  //toggleLoginStatus(token)
+  toggleLoginStatus(token)
 
  const router = new Navigo("/", { hash: true });
   //Not especially nice, BUT MEANT to simplify things. Make the router global so it can be accessed from all js-files
@@ -63,8 +63,8 @@ import { initMovieSeats } from "./pages/showSeats/seats.js"
         },
 
         "/movie/booking" : () => {
-            renderHtml(templateBooking, "content")
-           // initBooking()
+            renderHtml(templateReservation, "content")
+           // initReservation()
         },
 
         "/mytickets" : () => {
