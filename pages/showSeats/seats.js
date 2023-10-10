@@ -34,7 +34,7 @@ async function setupSeats(showId){
     
     try{
         showing = await fetchShow(showId)
-        theater = await fetchTheater(1)//showing.theaterId
+        theater = await fetchTheater(showing.theaterId)//showing.theaterId
         fetchSeatsInTheater(showing) //give showing alongside
     }
     catch(error){
