@@ -28,7 +28,6 @@ export async function initMovieSeats(){
 
 }
 
-
 async function setupSeats(showId){
     //Assuming each seat needs a 20px width/height box, and a little extra for space between seats.
     
