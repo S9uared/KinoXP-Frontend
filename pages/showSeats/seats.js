@@ -3,95 +3,117 @@ import { handleHttpErrors, makeOptions, sanitizeStringWithTableRows } from '../.
 //import {getShowingId} from "../program/program.js"
 const url = API_URL + "/seats"
 const reserveSeatList = []
-const seat1 = {
-    id : 1,
-    row : 1,
-    seat : 2
-}
-const seat2 = {
-    id : 2,
-    row : 3,
-    seat : 5
-}
-const seatsInTheater = [seat1, seat2]
-const redSeatsInTheater = []
+let seatOuterBox;
+let theater;
+let showing; 
 
-let theater = {
-    rows : 20,
-    seatsPerRow : 12
+export function getSeatList(){
+    return reserveSeatList;
 }
 
+//Works with template objects as data right now. Need to figure out fetch and why the data returned does not work as intended
 
-export function initMovieSeats(){
-    //Get showingId - Get customer info? Or save that for addBooking page?
-    const seatOuterBox = document.getElementById("seats-outerbox")
+export async function initMovieSeats(){
+    seatOuterBox = document.getElementById("seats-outerbox")
     seatOuterBox.addEventListener("click", UpdateSeatList)
-    //getTheaterSetup(getShowingId())
     
+    //Get showingId function - Get customer info? Or save that for addBooking page?
 
-    setupSeatOuterBox(seatOuterBox, theater.rows, theater.seatsPerRow)
-    seatOuterBox.innerHTML = createSeatVisual()
+    try{
+        setupSeats(1)//Show id add here
+    }
+    catch(error){
+        console.error(error)
+    }
+
 }
 
-function createSeatVisual(){
-    const seatVisual = seatsInTheater.map(seat => `<div class="seat-div" id=${seat.id}></div>`).join("")
-    return seatVisual;
-    //go through list of seats. Maybe sort it first. Create divs with different ids. Return this long div string at the end. 
-}
 
-function setupSeatOuterBox(seatOuterBox, rows, seatsPerRow){
+async function setupSeats(showId){
     //Assuming each seat needs a 20px width/height box, and a little extra for space between seats.
-    //Adjust accordingly
-    const boxWidth = (seatsPerRow*30)+50+"px";
-    const boxHeight = (rows*30)+50+"px";
+    
+    try{
+        showing = await fetchShow(showId)
+        theater = await fetchTheater(1)//showing.theaterId
+        fetchSeatsInTheater(showing) //give showing alongside
+    }
+    catch(error){
+        console.error(error)
+    }
+    const boxWidth = 7+`${theater.seatsPerRow}px`;
+    const boxHeight = 8+`${theater.rows}px`;
     seatOuterBox.style.width = boxWidth;
     seatOuterBox.style.height = boxHeight;
-    const boxColumns = "repeat("+seatsPerRow+", 1fr)";
-    const boxRows = "repeat("+rows+", 1fr)";
-    seatOuterBox.style.gridTemplateColumns = boxColumns;
-    seatOuterBox.style.gridTemplateRows = boxRows;
+
+    const boxColumns = theater.seatsPerRow; 
+    const boxRows = theater.rows;
+    seatOuterBox.style.gridTemplateColumns = "repeat("+boxColumns+", 1fr)";
+    seatOuterBox.style.gridTemplateRows = "repeat("+boxRows+", 1fr)";
+
+
+     //theater.id sættes ind her - 1 er som test data
+    
 }  
 
-
-function getTheaterSetup(showId){
-    const showing = fetchShow(showId)
-    fetchTheater(showing.theaterId)
-    fetchSeatsInTheater(showing.theaterId)
-}
-
 async function fetchShow(showId){
-    let showUrl = API_URL + "/" +showId;
-    let showing = await fetch(showUrl).then(handleHttpErrors)
+    let showUrl = API_URL + "/showings/" +showId;
+    const data = await fetch(showUrl).then(handleHttpErrors)
+    const showing = data;
     return showing;
 }
 
 async function fetchTheater(theaterId){
     const theaterUrl = API_URL + "/theaters/"+theaterId
-    theater = await fetch(theaterUrl).then(handleHttpErrors)
+    const data = await fetch(theaterUrl).then(handleHttpErrors);
+    const theaterData = data;
+    return theaterData;
 }
 
-async function fetchSeatsInTheater(theaterId){
-    const tempUrl = url + "/theater/"+theaterId
-    seatsInTheater = await fetch(tempUrl).handleHttpErrors;
+async function fetchSeatsInTheater(showing){
+    const tempUrl = url + "/theater/"+showing.theaterId
+    try{
+        const seatData = await fetch(tempUrl).then(handleHttpErrors);
+        const reservationData = await findOccupiedSeats(showing.id);
+        const reservedIds = reservationData.flatMap(reservation => reservation.seats.map(seat => seat.id));
+        
+        const seatVisual = seatData.map(seat => {
+
+            const isReserved = reservedIds.includes(seat.id);
+            const backgroundColor = isReserved ? `red` : `lightgreen`;
+
+            return `<div class="seat-div" id=${seat.id} style="background-color: ${backgroundColor}"></div>`
+            })
+            .join("");
+        
+        seatOuterBox.innerHTML = seatVisual;
+    }catch(error){
+        console.error(error)
+    }
 }
 
+async function findOccupiedSeats(showingId){ //Add showingId parameter to fetch
+    const resUrl = API_URL+"/reservations/showing/"+showingId
+    const occupiedSeats = await fetch(resUrl).then(handleHttpErrors);
+    return occupiedSeats;
+}
 function UpdateSeatList(event){
     const clickedSeat = event.target;
-    if(clickedSeat.style.backgroundColor === red){
+    //Gets styles from stylesheet too
+    const computedStyle = window.getComputedStyle(clickedSeat)
+    if(computedStyle.backgroundColor === "rgb(255, 0, 0)"){
         console.log("Seat already reserved, sorry")
     }
-    if(clickedSeat.style.backgroundColor === green){
-        reserveSeatList.add(clickedSeat.id);
-        clickedSeat.style.color = blue;
+    else if(computedStyle.backgroundColor === "rgb(144, 238, 144)"){
+        clickedSeat.style.backgroundColor = "blue";
+        reserveSeatList.push(clickedSeat.id);
     }
-    if(clickedSeat.style.backgroundColor === blue){
-        reserveSeatList.remove(clickedSeat.id);
-        clickedSeat.style.color = red;
+    else if(computedStyle.backgroundColor === "rgb(0, 0, 255)"){
+        clickedSeat.style.backgroundColor = "lightgreen";
+        const indexToDelete = reserveSeatList.indexOf(clickedSeat.id)
+        reserveSeatList.splice(indexToDelete, 1)
     }
-}
-
-export function getSeatList(){
-    return reserveSeatList;
+    reserveSeatList.sort();
+    console.log(reserveSeatList)
 }
 
 
