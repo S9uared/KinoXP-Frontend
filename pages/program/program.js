@@ -8,7 +8,6 @@ import {
 
 export async function initProgram() {
   initShowings();
-  document.getElementById("showings-by-date-result").innerText = "";
   document
     .getElementById("input-showing-date")
     .addEventListener("change", findShowingsByDate);
@@ -35,20 +34,22 @@ async function findShowingsByDate() {
 
     const cards = showings
       .map(
-        (showing) => `
-            <div class="showing-card">
-                <img 
-                src="${showing.movie.Poster}" 
-                loading="lazy"
-                class="showing-pic"
-                />
-                <div class="showing-card-content">
-                    <h6 class="showing-title">${showing.movie.Title}</h6>
-                    <p class="showing-runtime">Runtime: ${showing.movie.Runtime}</p>
-                    <p class="showing-runtime">Date: ${showing.date}</p>
-                    <p class="showing-runtime">Time: ${showing.time}</p>
-                </div>
-            </div>
+        (showing) => `      
+              <div id="showing-movieId-${showing.movie.id}" class="showing-card">
+              <a class="nav-link" href="/movie-details" data-navigo>
+                  <img 
+                  src="${showing.movie.Poster}" 
+                  loading="lazy"
+                  class="showing-pic"
+                  />
+              </a>    
+                  <div class="showing-card-content">
+                      <h6 class="showing-title">${showing.movie.Title}</h6>
+                      <p class="showing-runtime">Runtime: ${showing.movie.Runtime}</p>
+                      <p class="showing-runtime">Date: ${showing.date}</p>
+                      <p class="showing-runtime">Time: ${showing.time}</p>
+                  </div>
+              </div>          
         `
       )
       .join("");
@@ -77,19 +78,21 @@ async function initShowings() {
     const cards = showings
       .map(
         (showing) => `
-            <div class="showing-card">
-                <img 
-                src="${showing.movie.Poster}" 
-                loading="lazy"
-                class="showing-pic"
-                />
-                <div class="showing-card-content">
-                    <h6 class="showing-title">${showing.movie.Title}</h6>
-                    <p class="showing-runtime">Runtime: ${showing.movie.Runtime}</p>
-                    <p class="showing-runtime">Date: ${showing.date}</p>
-                    <p class="showing-runtime">Time: ${showing.time}</p>
-                </div>
+        <div id="showing-movieId-${showing.movie.id}" class="showing-card">
+        <a class="nav-link" href="/#/movie/details" data-navigo>
+            <img 
+            src="${showing.movie.Poster}" 
+            loading="lazy"
+            class="showing-pic"
+            />
+        </a>    
+            <div class="showing-card-content">
+                <h6 class="showing-title">${showing.movie.Title}</h6>
+                <p class="showing-runtime">Runtime: ${showing.movie.Runtime}</p>
+                <p class="showing-runtime">Date: ${showing.date}</p>
+                <p class="showing-runtime">Time: ${showing.time}</p>
             </div>
+        </div>   
         `
       )
       .join("");
@@ -97,6 +100,5 @@ async function initShowings() {
     document.getElementById("showings-result").innerHTML = cards;
   } catch (error) {
     console.error("An error occurred:", error);
-    // Handle the error appropriately, e.g., display an error message to the user.
   }
 }
