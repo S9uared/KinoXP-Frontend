@@ -66,7 +66,7 @@ window.addEventListener("load", async () => {
         // initMovieTimes()
       },
       "/movie/seats": () => {
-        renderHtml(templateMovieSeats, "content");
+        renderHtml(templateMovieSeats, "seat-div-box");
         initMovieSeats();
       },
       "/movie/booking": () => {
