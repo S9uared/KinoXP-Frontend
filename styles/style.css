@@ -71,3 +71,6 @@
 .showing-times:hover {
   background-color: chartreuse;
 }
+#seat-div-box{
+  display:hidden;
+}

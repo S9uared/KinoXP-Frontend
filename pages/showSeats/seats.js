@@ -16,13 +16,13 @@ export function getSeatList() {
 
 //Works with template objects as data right now. Need to figure out fetch and why the data returned does not work as intended
 
-export async function initMovieSeats() {
+export async function initMovieSeats(showingId) {
   seatOuterBox = document.getElementById("seats-outerbox");
   seatOuterBox.addEventListener("click", UpdateSeatList);
 
   //Get showingId function - Get customer info? Or save that for addBooking page?
   try {
-    setupSeats(1); //Show id add here
+    setupSeats(showingId); //Show id add here
   } catch (error) {
     console.error(error);
   }
