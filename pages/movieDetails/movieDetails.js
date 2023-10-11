@@ -1,36 +1,102 @@
 import { API_URL } from "../../settings.js";
 import {
-  handleHttpErrors,
   makeOptions,
   sanitizeStringWithTableRows,
+  handleHttpErrors,
 } from "../../utils.js";
-const url = API_URL + "/seats";
-const reserveSeatList = [];
-let seatOuterBox;
+
+const URL = API_URL + "/movies";
+const seatUrl = API_URL + "/seats";
+let reserveSeatList = [];
 let theater;
 let showing;
+let seatOuterBox;
 
-export function getSeatList() {
-  return reserveSeatList;
+export async function initMovieDetails(match) {
+  document.getElementById("seat-div-box").style.display = "none";
+  document.getElementById("showing-details").addEventListener("click",getShowingId)
+  seatOuterBox = document.getElementById("seats-outerbox")
+  seatOuterBox.addEventListener("click", updateSeatList)
+  if (match?.params?.id && match?.params?.date) {
+    const id = match.params.id;
+    const date = match.params.date;
+    document.getElementById("movie-details").innerHTML = "";
+    document.getElementById("showing-details").innerHtml = "";
+    fetAndRenderMovie(id, date);
+  }
 }
 
-//Works with template objects as data right now. Need to figure out fetch and why the data returned does not work as intended
+const navigoRoute = "movie-details";
 
-export async function initMovieSeats(showingId) {
-  seatOuterBox = document.getElementById("seats-outerbox");
-  seatOuterBox.addEventListener("click", UpdateSeatList);
-
-  //Get showingId function - Get customer info? Or save that for addBooking page?
+async function fetAndRenderMovie(idFromUrl, dateFromUrl) {
   try {
-    setupSeats(showingId); //Show id add here
+    const movie = await fetch(URL + "/" + idFromUrl).then(handleHttpErrors);
+
+    const showingsForMovieAndDate = await fetch(
+      API_URL + "/showings/" + idFromUrl + "/" + dateFromUrl
+    ).then(handleHttpErrors);
+
+    const movieStr = `
+      <div class="movie-card">
+        <img
+        src="${movie.Poster}" 
+        loading="lazy"
+        class="movie-pic"
+        />
+        <div class="movie-card-content">
+            <h6 class="movie-title">${movie.Title}</h6>          
+            <p class="movie-runtime">Runtime: ${movie.Runtime}</p>
+            <p class="movie-runtime">Genre: ${movie.Genre}</p>
+            <p class="movie-runtime">Director: ${movie.Director}</p>
+            <p class="movie-runtime">Actors: ${movie.Actors}</p>
+            <p class="movie-runtime">Plot: ${movie.Plot}</p>
+        </div>
+      </div> 
+    `;
+
+    const showingsStr = showingsForMovieAndDate
+      .map(
+        (showing) => `
+        <div id="showing_${showing.id}" class="showing-times">
+          ${showing.time}
+        </div>
+    `
+      )
+      .join("");
+
+    document.getElementById("movie-details").innerHTML = movieStr;
+    document.getElementById("showing-details").innerHTML = showingsStr;
   } catch (error) {
     console.error(error);
   }
 }
 
+export function getShowingId(evt) {
+  
+  const target = evt.target;
+  if (!target.id.includes("showing_")) {
+    return;
+  }
+  const showingId = target.id.replace("showing_", "");
+  setupSeats(showingId)
+  document.getElementById("seat-div-box").style.display = "block";
+}
+
+//Seats.js
+// 
+// 
+// 
+
+export function getSeatList() {
+  return reserveSeatList;
+}
+
+
 async function setupSeats(showId) {
   //Assuming each seat needs a 20px width/height box, and a little extra for space between seats.
-
+  
+  reserveSeatList = []
+  
   try {
     showing = await fetchShow(showId);
     theater = await fetchTheater(showing.theaterId); //showing.theaterId
@@ -66,7 +132,7 @@ async function fetchTheater(theaterId) {
 }
 
 async function fetchSeatsInTheater(showing) {
-  const tempUrl = url + "/theater/" + showing.theaterId;
+  const tempUrl = seatUrl + "/theater/" + showing.theaterId;
   try {
     const seatData = await fetch(tempUrl).then(handleHttpErrors);
     const reservationData = await findOccupiedSeats(showing.id);
@@ -95,7 +161,7 @@ async function findOccupiedSeats(showingId) {
   const occupiedSeats = await fetch(resUrl).then(handleHttpErrors);
   return occupiedSeats;
 }
-function UpdateSeatList(event) {
+function updateSeatList(event) {
   const clickedSeat = event.target;
   //Gets styles from stylesheet too
   const computedStyle = window.getComputedStyle(clickedSeat);
