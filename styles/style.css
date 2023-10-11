@@ -42,3 +42,32 @@
 .showing-card-content p {
   margin-bottom: auto;
 }
+
+/* MOVIESTYLES */
+
+.movie-card,
+.showing-details {
+  display: flex;
+}
+
+.movie-card-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.movie-pic {
+  width: 50%;
+}
+
+.showing-details {
+  gap: 50px;
+  justify-content: center;
+}
+
+.showing-times {
+  border: 1px solid black;
+}
+
+.showing-times:hover {
+  background-color: chartreuse;
+}

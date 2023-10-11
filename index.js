@@ -2,6 +2,7 @@ import "./navigo_EditedByLars.js"; //Will create the global Navigo, with a few c
 import { setActiveLink, loadHtml, renderHtml } from "./utils.js";
 import { initMovieSeats } from "./pages/showSeats/seats.js";
 import { initProgram } from "./pages/program/program.js";
+import { initMovieDetails } from "./pages/movieDetails/movieDetails.js";
 import { initLogin, logout, toggleLoginStatus } from "./pages/login/login.js";
 
 window.addEventListener("load", async () => {
@@ -9,6 +10,9 @@ window.addEventListener("load", async () => {
   //const templateCars = await loadHtml("./pages/cars/cars.html")
   const templateFrontPage = await loadHtml("./pages/frontpage/frontpage.html");
   const templateProgram = await loadHtml("./pages/program/program.html");
+  const templateMovieDetails = await loadHtml(
+    "./pages/movieDetails/movieDetails.html"
+  );
   const templateMovieSchedule = await loadHtml(
     "./pages/showMovieSchedule/schedule.html"
   );
@@ -52,6 +56,10 @@ window.addEventListener("load", async () => {
       "/program": () => {
         renderHtml(templateProgram, "content");
         initProgram();
+      },
+      "/movie-details": (match) => {
+        renderHtml(templateMovieDetails, "content");
+        initMovieDetails(match);
       },
       "/movie/time": () => {
         renderHtml(templateMovieSchedule, "content");
