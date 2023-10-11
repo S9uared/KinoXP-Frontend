@@ -60,3 +60,12 @@ async function fetAndRenderMovie(idFromUrl, dateFromUrl) {
     console.error(error);
   }
 }
+
+export function getShowingId(evt) {
+  const target = evt.target;
+  if (!target.id.includes("showing_")) {
+    return;
+  }
+
+  const showingId = target.id.replace("showing_", "");
+}
