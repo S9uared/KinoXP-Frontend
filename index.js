@@ -1,6 +1,7 @@
 import "./navigo_EditedByLars.js"; //Will create the global Navigo, with a few changes, object used below
 import { setActiveLink, loadHtml, renderHtml } from "./utils.js";
 import { initMovieSeats } from "./pages/showSeats/seats.js";
+import { initReservation } from "./pages/addBooking/addReservation.js";
 import { initProgram } from "./pages/program/program.js";
 import { initMovieDetails } from "./pages/movieDetails/movieDetails.js";
 import { initLogin, logout, toggleLoginStatus } from "./pages/login/login.js";
@@ -10,6 +11,7 @@ window.addEventListener("load", async () => {
   //const templateCars = await loadHtml("./pages/cars/cars.html")
   const templateFrontPage = await loadHtml("./pages/frontpage/frontpage.html");
   const templateProgram = await loadHtml("./pages/program/program.html");
+
   const templateMovieDetails = await loadHtml(
     "./pages/movieDetails/movieDetails.html"
   );
@@ -17,7 +19,9 @@ window.addEventListener("load", async () => {
     "./pages/showMovieSchedule/schedule.html"
   );
   const templateMovieSeats = await loadHtml("./pages/showSeats/seats.html");
-  const templateBooking = await loadHtml("./pages/addBooking/booking.html");
+  const templateReservation = await loadHtml(
+    "./pages/addBooking/addReservation.html"
+  );
   const templateMyTickets = await loadHtml(
     "./pages/findTickets/findTickets.html"
   );
@@ -25,6 +29,7 @@ window.addEventListener("load", async () => {
   const templateNotFound = await loadHtml("./pages/notFound/notFound.html");
   //If token existed, for example after a refresh, set UI accordingly
   const token = localStorage.getItem("token");
+
   toggleLoginStatus(token);
 
   const router = new Navigo("/", { hash: true });
@@ -65,13 +70,13 @@ window.addEventListener("load", async () => {
         renderHtml(templateMovieSchedule, "content");
         // initMovieTimes()
       },
-      "/movie/seats": () => {
+      /* "/movie/seats": () => {
         renderHtml(templateMovieSeats, "seat-div-box");
         initMovieSeats();
-      },
-      "/movie/booking": () => {
-        renderHtml(templateBooking, "content");
-        // initBooking()
+      }, */
+      "/movie/reservation": () => {
+        renderHtml(templateReservation, "content");
+        initReservation();
       },
       "/mytickets": () => {
         renderHtml(templateMyTickets, "content");
