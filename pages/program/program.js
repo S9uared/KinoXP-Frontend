@@ -114,3 +114,24 @@ async function showMovieDetails(evt) {
   // @ts-ignore
   window.router.navigate("movie-details?id=" + id + "&date=" + date);
 }
+
+// Slideshow
+document.addEventListener("DOMContentLoaded", function () {
+  const slides = document.querySelectorAll(".slide");
+  let slideIndex = 0;
+
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      slide.style.opacity = i === index ? 1 : 0; // Show the selected slide
+    });
+  }
+
+  function nextSlide() {
+    slideIndex = (slideIndex + 1) % slides.length; // Move to the next slide
+    showSlide(slideIndex);
+    setTimeout(nextSlide, 5000); // Call nextSlide again after 5 seconds
+  }
+
+  showSlide(slideIndex); // Show the initial slide
+  setTimeout(nextSlide, 5000); // Start the slideshow
+});
