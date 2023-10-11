@@ -1,24 +1,39 @@
-import "./navigo_EditedByLars.js"  //Will create the global Navigo, with a few changes, object used below
-import {setActiveLink, loadHtml, renderHtml} from "./utils.js"
-import { initMovieSeats } from "./pages/showSeats/seats.js"
+
+import "./navigo_EditedByLars.js"; //Will create the global Navigo, with a few changes, object used below
+import { setActiveLink, loadHtml, renderHtml } from "./utils.js";
+import { initMovieSeats } from "./pages/showSeats/seats.js";
+import { initReservation } from "./pages/addBooking/addReservation.js";
+import { initProgram } from "./pages/program/program.js";
+import { initMovieDetails } from "./pages/movieDetails/movieDetails.js";
+
 import { initLogin, logout, toggleLoginStatus } from "./pages/login/login.js";
 import { initStatistics } from "./pages/showStatistic/statistic.js";
 
-    window.addEventListener("load", async () => {
-        
-        //Add html pages in this format for client redirect  
-        //const templateCars = await loadHtml("./pages/cars/cars.html")
-        const templateFrontPage = await loadHtml("./pages/frontpage/frontpage.html")
-        const templateProgram = await loadHtml("./pages/program/program.html")
-        const templateMovieSchedule = await loadHtml("./pages/showMovieSchedule/schedule.html")
-        const templateMovieSeats = await loadHtml("./pages/showSeats/seats.html")
-        const templateBooking = await loadHtml("./pages/addBooking/booking.html")
-        const templateStatistic = await loadHtml("./pages/showStatistic/statistic.html")
-        const templateLogin = await loadHtml("./pages/login/login.html")
-        const templateNotFound = await loadHtml("./pages/notFound/notFound.html")
-        //If token existed, for example after a refresh, set UI accordingly
-        const token = localStorage.getItem("token")
-        toggleLoginStatus(token)
+window.addEventListener("load", async () => {
+  //Add html pages in this format for client redirect
+  //const templateCars = await loadHtml("./pages/cars/cars.html")
+  const templateFrontPage = await loadHtml("./pages/frontpage/frontpage.html");
+  const templateProgram = await loadHtml("./pages/program/program.html");
+
+  const templateMovieDetails = await loadHtml(
+    "./pages/movieDetails/movieDetails.html"
+  );
+  const templateMovieSchedule = await loadHtml(
+    "./pages/showMovieSchedule/schedule.html"
+  );
+  const templateMovieSeats = await loadHtml("./pages/showSeats/seats.html");
+  const templateReservation = await loadHtml(
+    "./pages/addBooking/addReservation.html"
+  );
+  const templateMyTickets = await loadHtml(
+    "./pages/findTickets/findTickets.html"
+  );
+  const templateLogin = await loadHtml("./pages/login/login.html");
+  const templateNotFound = await loadHtml("./pages/notFound/notFound.html");
+  //If token existed, for example after a refresh, set UI accordingly
+  const token = localStorage.getItem("token");
+
+  toggleLoginStatus(token);
 
  const router = new Navigo("/", { hash: true });
   //Not especially nice, BUT MEANT to simplify things. Make the router global so it can be accessed from all js-files
@@ -47,39 +62,50 @@ import { initStatistics } from "./pages/showStatistic/statistic.js";
             //initFrontPage()
         },
 
-        "/program": () => {
-            renderHtml(templateProgram, "content")
-            //initProgram()
-        },
+      "/": () => {
+        renderHtml(templateFrontPage, "content");
+        //initFrontPage()
+      },
+      "/program": () => {
+        renderHtml(templateProgram, "content");
+        initProgram();
+      },
+      "/movie-details": (match) => {
+        renderHtml(templateMovieDetails, "content");
+        initMovieDetails(match);
+      },
+      "/movie/time": () => {
+        renderHtml(templateMovieSchedule, "content");
+        // initMovieTimes()
+      },
+      /* "/movie/seats": () => {
+        renderHtml(templateMovieSeats, "seat-div-box");
+        initMovieSeats();
+      }, */
+      "/movie/reservation": () => {
+        renderHtml(templateReservation, "content");
+        initReservation();
+      },
+      "/mytickets": () => {
+        renderHtml(templateMyTickets, "content");
+        // initMyTickets()
+      },
+      "/employee/login": () => {
+        renderHtml(templateLogin, "content");
+        initLogin();
+      },
+      "/employee/program": () => {
+        renderHtml(templateEmpProgram, "content");
+        //initEmpProgram()
+      },
+      "/employee/booking": () => {
+        renderHtml(templateEmpBooking, "content");
+        //initEmpBooking()
+      },
+      "/logout": () => {
+        renderHtml(templateLogin, "content");
+        logout();
 
-        "/movie/time" : () => {
-            renderHtml(templateMovieSchedule, "content")
-           // initMovieTimes()
-        },
-
-        "/movie/seats" : () => {
-            renderHtml(templateMovieSeats, "content")
-            initMovieSeats()
-        },
-
-        "/movie/booking" : () => {
-            renderHtml(templateBooking, "content")
-           // initBooking()
-        },
-
-        "/employee/login": () => {
-            renderHtml(templateLogin, "content")
-            initLogin()
-        },
-
-        "/employee/program" : () => {
-            renderHtml(templateEmpProgram, "content")
-            //initEmpProgram()
-        },
-
-        "/statistics" : () => {
-          renderHtml(templateStatistic, "content")
-          initStatistics()
       },
         "/logout": () => {
           renderHtml(templateLogin, "content")

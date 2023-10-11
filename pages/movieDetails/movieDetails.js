@@ -4,6 +4,7 @@ import {
   sanitizeStringWithTableRows,
   handleHttpErrors,
 } from "../../utils.js";
+import { initReservation } from "../addBooking/addReservation.js";
 
 const URL = API_URL + "/movies";
 const seatUrl = API_URL + "/seats";
@@ -11,12 +12,24 @@ let reserveSeatList = [];
 let theater;
 let showing;
 let seatOuterBox;
+let showingId;
 
 export async function initMovieDetails(match) {
   document.getElementById("seat-div-box").style.display = "none";
-  document.getElementById("showing-details").addEventListener("click",getShowingId)
-  seatOuterBox = document.getElementById("seats-outerbox")
-  seatOuterBox.addEventListener("click", updateSeatList)
+  document.getElementById("modal").style.display = "none";
+
+  document
+    .getElementById("showing-details")
+    .addEventListener("click", getShowingId);
+  document
+    .getElementById("confirm-seats-btn")
+    .addEventListener(
+      "click",
+      () => (document.getElementById("modal").style.display = "block")
+    );
+
+  seatOuterBox = document.getElementById("seats-outerbox");
+  seatOuterBox.addEventListener("click", updateSeatList);
   if (match?.params?.id && match?.params?.date) {
     const id = match.params.id;
     const date = match.params.date;
@@ -26,7 +39,9 @@ export async function initMovieDetails(match) {
   }
 }
 
-const navigoRoute = "movie-details";
+export function getSeatList() {
+  return reserveSeatList;
+}
 
 async function fetAndRenderMovie(idFromUrl, dateFromUrl) {
   try {
@@ -71,32 +86,25 @@ async function fetAndRenderMovie(idFromUrl, dateFromUrl) {
   }
 }
 
-export function getShowingId(evt) {
-  
+function getShowingId(evt) {
   const target = evt.target;
   if (!target.id.includes("showing_")) {
     return;
   }
-  const showingId = target.id.replace("showing_", "");
-  setupSeats(showingId)
+  showingId = target.id.replace("showing_", "");
+  setupSeats(showingId);
   document.getElementById("seat-div-box").style.display = "block";
 }
 
 //Seats.js
-// 
-// 
-// 
-
-export function getSeatList() {
-  return reserveSeatList;
-}
-
-
+//
+//
+//
 async function setupSeats(showId) {
   //Assuming each seat needs a 20px width/height box, and a little extra for space between seats.
-  
-  reserveSeatList = []
-  
+
+  reserveSeatList = [];
+
   try {
     showing = await fetchShow(showId);
     theater = await fetchTheater(showing.theaterId); //showing.theaterId
