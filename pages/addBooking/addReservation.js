@@ -1,38 +1,35 @@
 import { getSeatList } from '../showSeats/seats.js';
+import{ handleHttpErrors, makeOptions } from '../../utils.js';
+import { API_URL } from '../../settings.js';
 
-let showingId = 1;
-let seatOuterBox;
+let showingId = 2;
+let seatList;
 
-export function setShowingId(id) {
-    showingId = id;
+export function initReservation() {
+    //showingId = getShowingId();
+    document.getElementById("make-reservation-btn").addEventListener("click", makeReservation);
+
+
+        seatList = [4570,4571,4572] //getSeatList(); 
+        //console.log(seatList);
 }
 
-export async function initMovieSeats() {
-    seatOuterBox = document.getElementById("seats-outerbox")
-    seatOuterBox.addEventListener("click", UpdateSeatList)
-
-    try {
-        console.log("Showing ID: ", showingId);
-
-        const customerInfo = await collectCustomerInfo();
-        console.log("Customer Info: ", customerInfo);
-
-        setupSeats(showingId);//Show id add here
-        const seatList = getSeatList(); 
-        console.log(seatList);
-    } catch (error) {
-        console.error(error);
+async function makeReservation() {
+    const reservation = {
+        showingId : showingId,
+        seatIds : seatList,
     }
+    collectCustomerInfo(reservation);
+   
+
+    const reservationUrl = API_URL + "/reservations";
+    const options = makeOptions("POST", reservation);
+    await fetch(reservationUrl, options).then(handleHttpErrors);
 }
 
-async function collectCustomerInfo() {
-    const customerFirstName = prompt ("Enter your first name");
-    const customerLastName = prompt ("Enter your last name");
-    const customerPhone = prompt ("Enter your email");
-
-    return {
-        customerFirstName,
-        customerLastName,
-        customerPhone
-    }
+function collectCustomerInfo(reservation) {
+    reservation.firstName = document.getElementById("firstName").value;
+    reservation.lastName = document.getElementById("lastName").value;
+    reservation.phoneNumber = document.getElementById("phone").value;
+    reservation.email = document.getElementById("email").value;
 }
