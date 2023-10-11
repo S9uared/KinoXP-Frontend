@@ -7,6 +7,7 @@ import {
 } from "../../utils.js";
 
 export async function initProgram() {
+  document.getElementById("showings-result").onclick = showMovieDetails;
   initShowings();
   document
     .getElementById("input-showing-date")
@@ -78,14 +79,13 @@ async function initShowings() {
     const cards = showings
       .map(
         (showing) => `
-        <div id="showing-movieId-${showing.movie.id}" class="showing-card">
-        <a class="nav-link" href="/#/movie/details" data-navigo>
-            <img 
+        <div class="showing-card">
+            <img id="movie_${showing.movie.id}"
             src="${showing.movie.Poster}" 
             loading="lazy"
             class="showing-pic"
+            data-date="${showing.date}"
             />
-        </a>    
             <div class="showing-card-content">
                 <h6 class="showing-title">${showing.movie.Title}</h6>
                 <p class="showing-runtime">Runtime: ${showing.movie.Runtime}</p>
@@ -101,4 +101,16 @@ async function initShowings() {
   } catch (error) {
     console.error("An error occurred:", error);
   }
+}
+
+async function showMovieDetails(evt) {
+  const target = evt.target;
+  if (!target.id.includes("movie_")) {
+    return;
+  }
+  const id = target.id.replace("movie_", "");
+  const date = target.getAttribute("data-date"); // Get the date attribute
+  // Now you have the 'date' available for further use.
+  // @ts-ignore
+  window.router.navigate("movie-details?id=" + id + "&date=" + date);
 }

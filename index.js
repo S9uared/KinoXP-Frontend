@@ -57,9 +57,9 @@ window.addEventListener("load", async () => {
         renderHtml(templateProgram, "content");
         initProgram();
       },
-      "/movie/details": () => {
+      "/movie-details": (match) => {
         renderHtml(templateMovieDetails, "content");
-        initMovieDetails();
+        initMovieDetails(match);
       },
       "/movie/time": () => {
         renderHtml(templateMovieSchedule, "content");
