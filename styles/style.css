@@ -10,15 +10,13 @@
   --primary-color: #e1def5;
   --secondary-color: #719ff6;
   --tertiary-color: #4c73e9;
-  --primary-font: #f5f5f5;
   --text-shadow: 2px 2px 4px #000000;
   --box-shadow: 0px 14px 20px 5px rgba(0,0,0,0.42);
 }
 
 body {
-  font-family: "Roboto", sans-serif;
+  font-family: "Gill Sans", sans-serif;
   background-color: var(--bg-color);
-  color: var(--primary-color);
   font-size: 1rem;
   line-height: 1.5;
   overflow-x: hidden;
@@ -42,6 +40,10 @@ html {
   z-index: 100;
 }
 
+.nav-link{
+  color: var(--primary-color);
+}
+
 .hero {
   position: relative;
   overflow: hidden;
@@ -60,6 +62,15 @@ html {
   background-size: cover;
   background-position: center;
   height: 100%; /* Set the slide height to match the container */
+}
+
+h1 {
+  font-size: 70px;
+  font-weight: 600;
+  background-image: linear-gradient(to right, var(--tertiary-color) 45%, var(--primary-color) 55%);
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
 }
 
 #seats-outerbox{
