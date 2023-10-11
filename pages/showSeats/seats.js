@@ -15,7 +15,7 @@ export function getSeatList(){
 
 export async function initMovieSeats(){
     seatOuterBox = document.getElementById("seats-outerbox")
-    seatOuterBox.addEventListener("click", updateSeatList)
+    seatOuterBox.addEventListener("click", UpdateSeatList)
     
     //Get showingId function - Get customer info? Or save that for addBooking page?
 
@@ -96,7 +96,7 @@ async function findOccupiedSeats(showingId){ //Add showingId parameter to fetch
     const occupiedSeats = await fetch(resUrl).then(handleHttpErrors);
     return occupiedSeats;
 }
-function updateSeatList(event){
+function UpdateSeatList(event){
     const clickedSeat = event.target;
     //Gets styles from stylesheet too
     const computedStyle = window.getComputedStyle(clickedSeat)
