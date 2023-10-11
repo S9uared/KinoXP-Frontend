@@ -114,3 +114,4 @@ async function showMovieDetails(evt) {
   // @ts-ignore
   window.router.navigate("movie-details?id=" + id + "&date=" + date);
 }
+
