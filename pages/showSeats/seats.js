@@ -4,7 +4,6 @@ import {
   makeOptions,
   sanitizeStringWithTableRows,
 } from "../../utils.js";
-//import {getShowingId} from "../program/program.js"
 const url = API_URL + "/seats";
 const reserveSeatList = [];
 let seatOuterBox;
@@ -22,9 +21,8 @@ export async function initMovieSeats() {
   seatOuterBox.addEventListener("click", UpdateSeatList);
 
   //Get showingId function - Get customer info? Or save that for addBooking page?
-
   try {
-    setupSeats(2); //Show id add here
+    setupSeats(1); //Show id add here
   } catch (error) {
     console.error(error);
   }

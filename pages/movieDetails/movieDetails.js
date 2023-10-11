@@ -68,4 +68,6 @@ export function getShowingId(evt) {
   }
 
   const showingId = target.id.replace("showing_", "");
+
+  return showingId;
 }
