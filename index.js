@@ -3,6 +3,7 @@ import {setActiveLink, loadHtml, renderHtml} from "./utils.js"
 import { initMovieSeats } from "./pages/showSeats/seats.js"
 import { initLogin, logout, toggleLoginStatus } from "./pages/login/login.js";
 import { initStatistics } from "./pages/showStatistic/statistic.js";
+import { initTheaters } from "./pages/manageTheaters/theater.js";
 
     window.addEventListener("load", async () => {
         
@@ -14,6 +15,7 @@ import { initStatistics } from "./pages/showStatistic/statistic.js";
         const templateMovieSeats = await loadHtml("./pages/showSeats/seats.html")
         const templateBooking = await loadHtml("./pages/addBooking/booking.html")
         const templateStatistic = await loadHtml("./pages/showStatistic/statistic.html")
+        const templateTheaters = await loadHtml("./pages/manageTheaters/theater.html")
         const templateLogin = await loadHtml("./pages/login/login.html")
         const templateNotFound = await loadHtml("./pages/notFound/notFound.html")
         //If token existed, for example after a refresh, set UI accordingly
@@ -72,9 +74,9 @@ import { initStatistics } from "./pages/showStatistic/statistic.js";
             initLogin()
         },
 
-        "/employee/program" : () => {
-            renderHtml(templateEmpProgram, "content")
-            //initEmpProgram()
+        "/theaters" : () => {
+            renderHtml(templateTheaters, "content")
+            initTheaters()
         },
 
         "/statistics" : () => {
