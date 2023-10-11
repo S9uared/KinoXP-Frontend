@@ -2,19 +2,26 @@ import "./navigo_EditedByLars.js"; //Will create the global Navigo, with a few c
 import { setActiveLink, loadHtml, renderHtml } from "./utils.js";
 import { initMovieSeats } from "./pages/showSeats/seats.js";
 import { initReservation } from "./pages/addBooking/addReservation.js";
-//import { initProgram } from "./pages/program/program.js";
-//import { initLogin, logout, toggleLoginStatus } from "./pages/login/login.js";
+import { initProgram } from "./pages/program/program.js";
+import { initMovieDetails } from "./pages/movieDetails/movieDetails.js";
+import { initLogin, logout, toggleLoginStatus } from "./pages/login/login.js";
 
 window.addEventListener("load", async () => {
   //Add html pages in this format for client redirect
   //const templateCars = await loadHtml("./pages/cars/cars.html")
   const templateFrontPage = await loadHtml("./pages/frontpage/frontpage.html");
   const templateProgram = await loadHtml("./pages/program/program.html");
+
+  const templateMovieDetails = await loadHtml(
+    "./pages/movieDetails/movieDetails.html"
+  );
   const templateMovieSchedule = await loadHtml(
     "./pages/showMovieSchedule/schedule.html"
   );
   const templateMovieSeats = await loadHtml("./pages/showSeats/seats.html");
-  const templateReservation = await loadHtml("./pages/addBooking/addReservation.html");
+  const templateReservation = await loadHtml(
+    "./pages/addBooking/addReservation.html"
+  );
   const templateMyTickets = await loadHtml(
     "./pages/findTickets/findTickets.html"
   );
@@ -22,7 +29,8 @@ window.addEventListener("load", async () => {
   const templateNotFound = await loadHtml("./pages/notFound/notFound.html");
   //If token existed, for example after a refresh, set UI accordingly
   const token = localStorage.getItem("token");
-  //toggleLoginStatus(token);
+
+  toggleLoginStatus(token);
 
   const router = new Navigo("/", { hash: true });
   //Not especially nice, BUT MEANT to simplify things. Make the router global so it can be accessed from all js-files
@@ -54,14 +62,18 @@ window.addEventListener("load", async () => {
         renderHtml(templateProgram, "content");
         initProgram();
       },
+      "/movie-details": (match) => {
+        renderHtml(templateMovieDetails, "content");
+        initMovieDetails(match);
+      },
       "/movie/time": () => {
         renderHtml(templateMovieSchedule, "content");
         // initMovieTimes()
       },
-      "/movie/seats": () => {
-        renderHtml(templateMovieSeats, "content");
+      /* "/movie/seats": () => {
+        renderHtml(templateMovieSeats, "seat-div-box");
         initMovieSeats();
-      },
+      }, */
       "/movie/reservation": () => {
         renderHtml(templateReservation, "content");
         initReservation();
