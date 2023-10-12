@@ -1,11 +1,10 @@
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-:root{
+:root {
   --bg-color: #181b23;
   --primary-color: #e1def5;
   --secondary-color: #719ff6;
@@ -105,31 +104,40 @@ h1 {
   margin: 2rem;
 }
 
+
 #seats-outerbox{
     display:grid;
     padding:20px;
+
 }
-.seat-div{
-    border: 1px solid grey;
-    height:25px;
-    width:25px;
-    margin: 5px 0 0 5px;
-    border-radius: 2px 2px 2px 2px;    
+
+.seat-div {
+  border: 1px solid grey;
+  height: 25px;
+  width: 25px;
+  margin: 5px 0 0 5px;
+  border-radius: 2px 2px 2px 2px;
 }
+
 #movielist-outerbox{
     width:80%;
     height:auto;
 }
+
 #graph-box{
     display:none;
     background-color: white;
     width:700px;
-    height:400px;
+    height: 380px;
     position:absolute;
     bottom:0;
     right:0;
     z-index: 5;
+}
 
+#statistic-chart{
+  width:100%;
+  padding-top:20px; 
 }
 
 /* PROGRAM */
@@ -204,7 +212,6 @@ h1 {
 label{
   color: var(--primary-color);
 }
-
 /* SEATS */
 .seat-box{
   display: flex;
