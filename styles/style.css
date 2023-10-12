@@ -83,12 +83,15 @@ html {
     display:none;
     background-color: white;
     width:700px;
-    height:400px;
+    height: 380px;
     position:absolute;
     bottom:0;
     right:0;
     z-index: 5;
-
+}
+#statistic-chart{
+  width:100%;
+  padding-top:20px;
 }
 /* SHOWINGSTYLES */
 .showings {
