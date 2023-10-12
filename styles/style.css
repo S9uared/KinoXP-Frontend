@@ -64,6 +64,10 @@ h1 {
   -webkit-background-clip: text;
 }
 
+h2{
+  color: var(--secondary-color);
+}
+
 /* PROGRAM HERO SECTION */
 .hero {
   position: relative;
@@ -82,12 +86,11 @@ h1 {
   display: none;
 }
 
+
 /* Show the first slide by default */
 .slide:first-child {
   display: block;
 }
-
-
 
 /* MOVIE PAGE */
 .movie-card-content{
@@ -303,42 +306,13 @@ button:hover {
   color: var(--tertiary-color);
 }
 
-
-
-
-
-/* MODAL 
-.modal-container {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+.error-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.modal {
-  position: absolute;
-  background-color: white;
-  padding: 20px;
-  width: 80%;
-  max-width: 400px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border: 1px solid #ccc;
+img.errorimg{
+  height: 500px;
 }
-
-.close-modal {
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding: 10px;
-  cursor: pointer;
-}
-
-.close-modal:hover {
-  background-color: #ccc;
-}*/

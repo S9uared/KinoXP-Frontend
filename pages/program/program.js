@@ -133,24 +133,5 @@ async function showMovieDetails(evt) {
   window.router.navigate("movie-details?id=" + id + "&date=" + date);
 }
 
-//ss
-document.addEventListener("DOMContentLoaded", function () {
-  console.log("JavaScript is running!");
-  
-  const slides = document.querySelectorAll(".slide");
-  let slideIndex = 0;
+//slideshow
 
-  function showSlide(index) {
-    slides.forEach((slide, i) => {
-      slide.style.opacity = i === index ? 1 : 0;
-    });
-  }
-
-  function nextSlide() {
-    slideIndex = (slideIndex + 1) % slides.length;
-    showSlide(slideIndex);
-  }
-
-  showSlide(slideIndex);
-  setInterval(nextSlide, 5000); // Use setInterval for automatic cycling
-});
