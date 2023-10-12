@@ -1,4 +1,4 @@
-// import Chart from 'chart.js/auto';
+//  import Chart from 'chart.js/auto';
 import { API_URL } from '../../settings.js'
 import { handleHttpErrors, makeOptions, sanitizeStringWithTableRows } from '../../utils.js'
 const url = API_URL+"/statistics"
@@ -12,6 +12,7 @@ export function initStatistics(){
 
 function hideGraph(){
     document.getElementById("graph-box").style.display = "none";
+    Chart.getChart("statistic-chart").destroy();
 }
 async function fetchStatisticsForMovie(event){
     const clickedMovie = event.target;
@@ -46,12 +47,16 @@ async function createMovieDivs(){
 
 
 function setupGraphFromStats(stats){
+    const activeChart = Chart.getChart("statistic-chart")
+    if(activeChart){
+        activeChart.destroy();
+    }
     document.getElementById("graph-box").style.display = "block";
     const xValues = []
     const yValues = []
     if(stats instanceof Array){
-        stats.map(stat => xValues.push(stat.date));
-        stats.map(stat => yValues.push(stat.totalReservations));
+        stats.map(stat => xValues.unshift(stat.date));
+        stats.map(stat => yValues.unshift(stat.totalReservations));
     }
     if(stats instanceof Object){
         xValues.push(stats.date);
@@ -71,9 +76,27 @@ function setupGraphFromStats(stats){
             }]
           },
           options: {
-            legend: {display: false},
+            plugins: {
+                legend: {
+                    display: false,
+                }
+                
+            },
             scales: {
-              yAxes: [{ticks: {min: 0, max:100}}],
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Average seats sold in %' // Change this to your desired x-axis title
+                    },
+                },
+                y: {
+                    beginAtZero: true,
+                    min: 0,
+                    max: 100,
+                    ticks: {
+                        stepSize: 10
+                    }
+                },
             }
           }
         });

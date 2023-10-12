@@ -14,11 +14,11 @@
 
 <body>  
 
-  <!--navbar-expand-lg navbar-light bg-light  container-fluid-->
-
-    <nav class="navbar navbar-expand-lg navbar-light" style="font-size:larger">
+    <nav class="navbar navbar-expand-lg" style="font-size:larger">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#/program" style="color:rgb(72, 69, 225)">KinoXP</a>
+          <a class="navbar-brand" href="/" data-navigo>
+            <img src="images/Logo.png" alt="KinoXP" style="width: 150px; height: auto;">
+        </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -26,46 +26,12 @@
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul id="menu" class="navbar-nav">
 
-              <!--
-              <li class="nav-item active">
-                <a class="nav-link" href="/" data-navigo>Home</a>
-              </li>
-              -->
-              <!-- 
-                Drop down in nav bar for future use.
-                Copy this and edit links/names to match correct use
-                <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-                  aria-expanded="false">
-                  Program
-                </a>
-                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
-                  <li><a class="dropdown-item" href="/find-edit-car" data-navigo>Find/Edit Car</a></li>
-                  <li><a class="dropdown-item" href="/add-car" data-navigo>Add Car</a></li>
-                  <li>
-                    <hr class="dropdown-divider">
-                  </li>
-                  <li><a class="dropdown-item" href="/cars" data-navigo>All Cars</a></li>
-                </ul>
-              </li> -->
               <li class="nav-item ">
-                <a class="nav-link" href="/program" data-navigo>Program</a>
+                <a class="nav-link" href="/" data-navigo>PROGRAM</a>
               </li>
               <li class="nav-item ">
-                <a class="nav-link" href="/futuremovies" data-navigo>Future movies</a>
+                <a class="nav-link" href="/futuremovies" data-navigo>FUTURE MOVIES</a>
               </li>
-
-              <!--
-              <li class="nav-item">
-                <a class="nav-link" href="/mytickets" data-navigo>My tickets</a>
-              </li>
-              -->
-              
-              <!--
-              <li class="nav-item">
-                <a class="nav-link" href="/movie/seats" data-navigo>Show Seats(Remove this later)</a>
-              </li>
-              -->
 
               <li class="nav-item dropdown admin-only">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"

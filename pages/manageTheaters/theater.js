@@ -17,7 +17,7 @@ async function fetchTheaters(){
         const theaterDivs = theaters.map(theater => {
            theaterIds.push(theater.id);
            return `<div class="theater-box" id=theater_${theater.id}>
-                <h2>Theater ${theater.id}</h2>
+                <p>Theater ${theater.id}</p>
                 <p>Rows</p>
                 <input class="theater-input" id="rows_${theater.id}" type="text" value="${theater.rows}">
                 <p>Seats per row</p>

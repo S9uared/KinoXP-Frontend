@@ -11,12 +11,32 @@ let reserveSeatList = [];
 let theater;
 let showing;
 let seatOuterBox;
+let showingId;
 
 export async function initMovieDetails(match) {
   document.getElementById("seat-div-box").style.display = "none";
-  document.getElementById("showing-details").addEventListener("click",getShowingId)
-  seatOuterBox = document.getElementById("seats-outerbox")
-  seatOuterBox.addEventListener("click", updateSeatList)
+  document.getElementById("modal").style.display = "none";
+
+  document
+    .getElementById("showing-details")
+    .addEventListener("click", getShowingId);
+  document
+    .getElementById("confirm-seats-btn")
+    .addEventListener(
+      "click",
+      () => (document.getElementById("modal").style.display = "block")
+    );
+  document.getElementById("make-reservation-btn").addEventListener("click", makeReservation)
+
+    const closeButton = document.getElementById('close-button');
+    const modal = document.querySelector('.modalbox');
+
+    closeButton.addEventListener('click', () => {
+      modal.style.display = 'none';
+    });
+
+  seatOuterBox = document.getElementById("seats-outerbox");
+  seatOuterBox.addEventListener("click", updateSeatList);
   if (match?.params?.id && match?.params?.date) {
     const id = match.params.id;
     const date = match.params.date;
@@ -26,7 +46,6 @@ export async function initMovieDetails(match) {
   }
 }
 
-const navigoRoute = "movie-details";
 
 async function fetAndRenderMovie(idFromUrl, dateFromUrl) {
   try {
@@ -44,7 +63,7 @@ async function fetAndRenderMovie(idFromUrl, dateFromUrl) {
         class="movie-pic"
         />
         <div class="movie-card-content">
-            <h6 class="movie-title">${movie.Title}</h6>          
+            <h1 id="movie-title" class="movie-title">${movie.Title}</h6>          
             <p class="movie-runtime">Runtime: ${movie.Runtime}</p>
             <p class="movie-runtime">Genre: ${movie.Genre}</p>
             <p class="movie-runtime">Director: ${movie.Director}</p>
@@ -71,32 +90,23 @@ async function fetAndRenderMovie(idFromUrl, dateFromUrl) {
   }
 }
 
-export function getShowingId(evt) {
-  
+function getShowingId(evt) {
   const target = evt.target;
   if (!target.id.includes("showing_")) {
     return;
   }
-  const showingId = target.id.replace("showing_", "");
-  setupSeats(showingId)
+  showingId = target.id.replace("showing_", "");
+  setupSeats(showingId);
   document.getElementById("seat-div-box").style.display = "block";
 }
 
 //Seats.js
-// 
-// 
-// 
-
-export function getSeatList() {
-  return reserveSeatList;
-}
-
 
 async function setupSeats(showId) {
   //Assuming each seat needs a 20px width/height box, and a little extra for space between seats.
-  
-  reserveSeatList = []
-  
+
+  reserveSeatList = [];
+
   try {
     showing = await fetchShow(showId);
     theater = await fetchTheater(showing.theaterId); //showing.theaterId
@@ -113,8 +123,6 @@ async function setupSeats(showId) {
   const boxRows = theater.rows;
   seatOuterBox.style.gridTemplateColumns = "repeat(" + boxColumns + ", 1fr)";
   seatOuterBox.style.gridTemplateRows = "repeat(" + boxRows + ", 1fr)";
-
-  //theater.id sættes ind her - 1 er som test data
 }
 
 async function fetchShow(showId) {
@@ -156,7 +164,6 @@ async function fetchSeatsInTheater(showing) {
 }
 
 async function findOccupiedSeats(showingId) {
-  //Add showingId parameter to fetch
   const resUrl = API_URL + "/reservations/showing/" + showingId;
   const occupiedSeats = await fetch(resUrl).then(handleHttpErrors);
   return occupiedSeats;
@@ -177,4 +184,42 @@ function updateSeatList(event) {
   }
   reserveSeatList.sort();
   console.log(reserveSeatList);
+}
+
+async function makeReservation() {
+  document.getElementById("reservation-failure").innerText = "";
+  const reservation = {
+    showingId: showingId,
+    seatIds: reserveSeatList,
+  };
+  if(reserveSeatList.length < 1){
+    document.getElementById("reservation-failure").innerText = "Please choose seats for your reservation"
+    return;
+  }
+  if(!collectCustomerInfo(reservation)){
+    document.getElementById("reservation-failure").innerText = "Please enter all of your information"
+    return;
+  }
+
+  const reservationUrl = API_URL + "/reservations";
+  const options = makeOptions("POST", reservation, false);
+  await fetch(reservationUrl, options).then(handleHttpErrors);
+  alert("Reservation confirmed. \nConfirmation has been sent to the provided e-mail")
+  document.getElementById("modal").style.display = "none";
+  document.getElementById("firstName").value = ""
+  document.getElementById("lastName").value = ""
+  document.getElementById("phone").value = ""
+  document.getElementById("email").value = ""
+  window.router.navigate("/");
+}
+
+function collectCustomerInfo(reservation) {
+  reservation.firstName = document.getElementById("firstName").value;
+  reservation.lastName = document.getElementById("lastName").value;
+  reservation.phoneNumber = document.getElementById("phone").value;
+  reservation.email = document.getElementById("email").value;
+  if(!reservation.firstName || !reservation.lastName || !reservation.phoneNumber || !reservation.email){
+    return false
+  }
+  return true;
 }
