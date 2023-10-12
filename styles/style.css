@@ -67,6 +67,7 @@ html {
   border-right: 1px solid grey;
   padding: 20px;
 }
+
 .seat-div {
   border: 1px solid grey;
   height: 25px;
@@ -74,20 +75,28 @@ html {
   margin: 5px 0 0 5px;
   border-radius: 2px 2px 2px 2px;
 }
-#movielist-outerbox {
-  width: 80%;
-  height: auto;
+
+#movielist-outerbox{
+    width:80%;
+    height:auto;
 }
-#graph-box {
-  display: none;
-  background-color: white;
-  width: 700px;
-  height: 400px;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  z-index: 5;
+
+#graph-box{
+    display:none;
+    background-color: white;
+    width:700px;
+    height: 380px;
+    position:absolute;
+    bottom:0;
+    right:0;
+    z-index: 5;
 }
+
+#statistic-chart{
+  width:100%;
+  padding-top:20px; 
+}
+
 /* SHOWINGSTYLES */
 .showings {
   background-color: var(--bg-color);
