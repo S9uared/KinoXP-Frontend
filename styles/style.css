@@ -312,8 +312,8 @@ button:hover {
 }
 
 .showing-box {
-  border: 1px solid grey;
-  box-shadow: 10px 10px 8px #888888;
+  border: 1px solid var(--bg-color);
+  box-shadow: var(--box-shadow);
   padding: 20px;
   display: flex;
   flex-direction: column;
