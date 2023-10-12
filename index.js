@@ -4,6 +4,7 @@ import { initMovieSeats } from "./pages/showSeats/seats.js"
 import { initLogin, logout, toggleLoginStatus } from "./pages/login/login.js";
 import { initStatistics } from "./pages/showStatistic/statistic.js";
 import { initTheaters } from "./pages/manageTheaters/theater.js";
+import { initManageMovies } from "./pages/manageMovies/manageMovies.js";
 
     window.addEventListener("load", async () => {
         
@@ -14,8 +15,9 @@ import { initTheaters } from "./pages/manageTheaters/theater.js";
         const templateMovieSchedule = await loadHtml("./pages/showMovieSchedule/schedule.html")
         const templateMovieSeats = await loadHtml("./pages/showSeats/seats.html")
         const templateBooking = await loadHtml("./pages/addBooking/booking.html")
-        const templateStatistic = await loadHtml("./pages/showStatistic/statistic.html")
         const templateTheaters = await loadHtml("./pages/manageTheaters/theater.html")
+        const templateMovies = await loadHtml("./pages/manageMovies/manageMovies.html")
+        const templateStatistic = await loadHtml("./pages/showStatistic/statistic.html") 
         const templateLogin = await loadHtml("./pages/login/login.html")
         const templateNotFound = await loadHtml("./pages/notFound/notFound.html")
         //If token existed, for example after a refresh, set UI accordingly
@@ -74,6 +76,10 @@ import { initTheaters } from "./pages/manageTheaters/theater.js";
             initLogin()
         },
 
+        "/manage/movies" : () => {
+          renderHtml(templateMovies, "content")
+          initManageMovies()
+      },
         "/manage/theaters" : () => {
             renderHtml(templateTheaters, "content")
             initTheaters()
