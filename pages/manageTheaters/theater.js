@@ -7,7 +7,6 @@ export function initTheaters(){
     document.getElementById("create-theater-submit").addEventListener("click", addTheater)
     document.getElementById("create-theater-btn").addEventListener("click", function (){
         document.getElementById("modal").style.display = "block"
-        console.log(theaterIds);
     })
 }
 
