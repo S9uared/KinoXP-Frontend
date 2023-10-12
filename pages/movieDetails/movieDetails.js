@@ -27,6 +27,7 @@ export async function initMovieDetails(match) {
       "click",
       () => (document.getElementById("modal").style.display = "block")
     );
+  document.getElementById("make-reservation-btn").addEventListener("click", makeReservation)
 
     const closeButton = document.getElementById('close-button');
     const modal = document.querySelector('.modalbox');
@@ -46,9 +47,6 @@ export async function initMovieDetails(match) {
   }
 }
 
-export function getSeatList() {
-  return reserveSeatList;
-}
 
 async function fetAndRenderMovie(idFromUrl, dateFromUrl) {
   try {
@@ -187,4 +185,37 @@ function updateSeatList(event) {
   }
   reserveSeatList.sort();
   console.log(reserveSeatList);
+}
+
+async function makeReservation() {
+  document.getElementById("reservation-failure").innerText = "";
+  const reservation = {
+    showingId: showingId,
+    seatIds: reserveSeatList,
+  };
+  if(reserveSeatList.length < 1){
+    document.getElementById("reservation-failure").innerText = "Please choose seats for your reservation"
+    return;
+  }
+  if(!collectCustomerInfo(reservation)){
+    document.getElementById("reservation-failure").innerText = "Please enter all of your information"
+    return;
+  }
+
+  const reservationUrl = API_URL + "/reservations";
+  const options = makeOptions("POST", reservation, false);
+  await fetch(reservationUrl, options).then(handleHttpErrors);
+  document.getElementById("modal").style.display = "none";
+  window.router.navigate("/");
+}
+
+function collectCustomerInfo(reservation) {
+  reservation.firstName = document.getElementById("firstName").value;
+  reservation.lastName = document.getElementById("lastName").value;
+  reservation.phoneNumber = document.getElementById("phone").value;
+  reservation.email = document.getElementById("email").value;
+  if(!reservation.firstName || !reservation.lastName || !reservation.phoneNumber || !reservation.email){
+    return false
+  }
+  return true;
 }
