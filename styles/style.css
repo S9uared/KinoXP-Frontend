@@ -69,30 +69,6 @@ h2{
   color: var(--secondary-color);
 }
 
-/* PROGRAM HERO SECTION */
-.hero {
-  position: relative;
-  overflow: hidden;
-  height: 100%; /* Adjust this to fit your design */
-}
-
-.slideshow-container {
-  width: 100%;
-  overflow: hidden;
-}
-
-.slide {
-  width: 100%;
-  height: auto;
-  display: none;
-}
-
-
-/* Show the first slide by default */
-.slide:first-child {
-  display: block;
-}
-
 /* MOVIE PAGE */
 .movie-card-content{
   display: flex;
@@ -336,8 +312,8 @@ button:hover {
 }
 
 .showing-box {
-  border: 1px solid grey;
-  box-shadow: 10px 10px 8px #888888;
+  border: 1px solid var(--bg-color);
+  box-shadow: var(--box-shadow);
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -372,17 +348,20 @@ img.errorimg{
   height: 500px;
 }
 
-/* XO */
-body {
-  font-family: Arial, sans-serif;
-  overflow: hidden; /* Hide horizontal scrollbar */
+.program-content {
+  position: relative;
+  top: 100%; /* Move the content below the hero section */
+  transform: translateY(0);
+  margin-top: 5rem;
 }
+
+/* XO */
 
 .hero {
   position: relative;
-  width: 100%;
-  height: 100vh;
-  overflow: hidden;
+  height: 60vh; /* Adjust the height as needed */
+  background-color: var(--bg-color); /* Set the background color to match your page */
+  animation: imageCycle 60s infinite;
 }
 
 .hero-image {
@@ -391,7 +370,7 @@ body {
   height: 100%;
   background-image: url('../images/img1.jpg');
   background-size: cover;
-  animation: imageCycle 60s infinite; /* Make the cycle much slower and repeat infinitely */
+  animation: imageCycle 60s infinite;
 }
 
 @keyframes imageCycle {
