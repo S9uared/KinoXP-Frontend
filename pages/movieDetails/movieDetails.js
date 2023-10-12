@@ -59,7 +59,7 @@ async function fetAndRenderMovie(idFromUrl, dateFromUrl) {
         class="movie-pic"
         />
         <div class="movie-card-content">
-            <h6 class="movie-title">${movie.Title}</h6>          
+            <h1 id="movie-title" class="movie-title">${movie.Title}</h6>          
             <p class="movie-runtime">Runtime: ${movie.Runtime}</p>
             <p class="movie-runtime">Genre: ${movie.Genre}</p>
             <p class="movie-runtime">Director: ${movie.Director}</p>
@@ -97,9 +97,7 @@ function getShowingId(evt) {
 }
 
 //Seats.js
-//
-//
-//
+
 async function setupSeats(showId) {
   //Assuming each seat needs a 20px width/height box, and a little extra for space between seats.
 
@@ -121,8 +119,6 @@ async function setupSeats(showId) {
   const boxRows = theater.rows;
   seatOuterBox.style.gridTemplateColumns = "repeat(" + boxColumns + ", 1fr)";
   seatOuterBox.style.gridTemplateRows = "repeat(" + boxRows + ", 1fr)";
-
-  //theater.id sættes ind her - 1 er som test data
 }
 
 async function fetchShow(showId) {
@@ -164,7 +160,6 @@ async function fetchSeatsInTheater(showing) {
 }
 
 async function findOccupiedSeats(showingId) {
-  //Add showingId parameter to fetch
   const resUrl = API_URL + "/reservations/showing/" + showingId;
   const occupiedSeats = await fetch(resUrl).then(handleHttpErrors);
   return occupiedSeats;

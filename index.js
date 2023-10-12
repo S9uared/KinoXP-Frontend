@@ -1,7 +1,6 @@
 
 import "./navigo_EditedByLars.js"; //Will create the global Navigo, with a few changes, object used below
 import { setActiveLink, loadHtml, renderHtml } from "./utils.js";
-import { initMovieSeats } from "./pages/showSeats/seats.js";
 import { initReservation } from "./pages/addBooking/addReservation.js";
 import { initProgram } from "./pages/program/program.js";
 import { initMovieDetails } from "./pages/movieDetails/movieDetails.js";
@@ -12,7 +11,7 @@ import { initStatistics } from "./pages/showStatistic/statistic.js";
 window.addEventListener("load", async () => {
   //Add html pages in this format for client redirect
   //const templateCars = await loadHtml("./pages/cars/cars.html")
-  const templateFrontPage = await loadHtml("./pages/frontpage/frontpage.html");
+
   const templateProgram = await loadHtml("./pages/program/program.html");
 
   const templateMovieDetails = await loadHtml(
@@ -25,9 +24,7 @@ window.addEventListener("load", async () => {
   const templateReservation = await loadHtml(
     "./pages/addBooking/addReservation.html"
   );
-  const templateMyTickets = await loadHtml(
-    "./pages/findTickets/findTickets.html"
-  );
+ 
   const templateLogin = await loadHtml("./pages/login/login.html");
   const templateNotFound = await loadHtml("./pages/notFound/notFound.html");
   //If token existed, for example after a refresh, set UI accordingly
@@ -57,16 +54,8 @@ window.addEventListener("load", async () => {
     //     </p>
     //  `,
         
-        "/": () => {
-            renderHtml(templateFrontPage, "content")
-            //initFrontPage()
-        },
-
+      
       "/": () => {
-        renderHtml(templateFrontPage, "content");
-        //initFrontPage()
-      },
-      "/program": () => {
         renderHtml(templateProgram, "content");
         initProgram();
       },
