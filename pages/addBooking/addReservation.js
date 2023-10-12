@@ -1,4 +1,3 @@
-import { getSeatList } from "../movieDetails/movieDetails.js";
 import { handleHttpErrors, makeOptions } from "../../utils.js";
 import { API_URL } from "../../settings.js";
 
