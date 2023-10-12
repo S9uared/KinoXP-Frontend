@@ -12,6 +12,27 @@ export async function initProgram() {
   document
     .getElementById("input-showing-date")
     .addEventListener("change", findShowingsByDate);
+
+  // Slideshow
+  document.addEventListener("DOMContentLoaded", function () {
+    const slides = document.querySelectorAll(".slide");
+    let slideIndex = 0;
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.style.opacity = i === index ? 1 : 0; // Show the selected slide
+      });
+    }
+
+    function nextSlide() {
+      slideIndex = (slideIndex + 1) % slides.length; // Move to the next slide
+      showSlide(slideIndex);
+      setTimeout(nextSlide, 5000); // Call nextSlide again after 5 seconds
+    }
+
+    showSlide(slideIndex); // Show the initial slide
+    setTimeout(nextSlide, 5000); // Start the slideshow
+  });
 }
 
 async function findShowingsByDate() {
@@ -58,7 +79,6 @@ async function findShowingsByDate() {
     document.getElementById("showings-result").innerHTML = cards;
   } catch (error) {
     console.error("An error occurred:", error);
-    // Handle the error appropriately, e.g., display an error message to the user.
   }
 }
 
@@ -90,7 +110,7 @@ async function initShowings() {
                 <h6 class="showing-title">${showing.movie.Title}</h6>
                 <p class="showing-runtime">Runtime: ${showing.movie.Runtime}</p>
                 <p class="showing-runtime">Date: ${showing.date}</p>
-                <p class="showing-runtime">Time: ${showing.time}</p>
+                <p class "showing-runtime">Time: ${showing.time}</p>
             </div>
         </div>   
         `
@@ -109,9 +129,7 @@ async function showMovieDetails(evt) {
     return;
   }
   const id = target.id.replace("movie_", "");
-  const date = target.getAttribute("data-date"); // Get the date attribute
-  // Now you have the 'date' available for further use.
-  // @ts-ignore
+  const date = target.getAttribute("data-date");
   window.router.navigate("movie-details?id=" + id + "&date=" + date);
 }
 
