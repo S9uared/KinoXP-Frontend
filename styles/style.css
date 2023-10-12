@@ -1,7 +1,6 @@
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
 :root {
@@ -66,6 +65,10 @@ h1 {
   -webkit-background-clip: text;
 }
 
+h2{
+  color: var(--secondary-color);
+}
+
 /* PROGRAM HERO SECTION */
 .hero {
   position: relative;
@@ -84,12 +87,11 @@ h1 {
   display: none;
 }
 
+
 /* Show the first slide by default */
 .slide:first-child {
   display: block;
 }
-
-
 
 /* MOVIE PAGE */
 .movie-card-content{
@@ -359,42 +361,66 @@ button:hover {
   color: var(--tertiary-color);
 }
 
+.error-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 
+img.errorimg{
+  height: 500px;
+}
 
+/* XO */
+body {
+  font-family: Arial, sans-serif;
+  overflow: hidden; /* Hide horizontal scrollbar */
+}
 
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
 
-/* MODAL 
-.modal-container {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
+.hero-image {
+  position: absolute;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-image: url('../images/img1.jpg');
+  background-size: cover;
+  animation: imageCycle 60s infinite; /* Make the cycle much slower and repeat infinitely */
 }
 
-.modal {
-  position: absolute;
-  background-color: white;
-  padding: 20px;
-  width: 80%;
-  max-width: 400px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border: 1px solid #ccc;
+@keyframes imageCycle {
+  0% {
+    left: 0;
+    background-image: url('../images/img1.jpg');
+  }
+  16.66% {
+    left: 0;
+    background-image: url('../images/img2.jpg');
+  }
+  33.33% {
+    left: 0;
+    background-image: url('../images/img3.jpg');
+  }
+  50% {
+    left: 0;
+    background-image: url('../images/img4.jpg');
+  }
+  66.66% {
+    left: 0;
+    background-image: url('../images/img5.jpg');
+  }
+  83.33% {
+    left: 0;
+    background-image: url('../images/img6.jpg');
+  }
+  100% {
+    left: 0;
+    background-image: url('../images/img7.jpg');
+  }
 }
-
-.close-modal {
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding: 10px;
-  cursor: pointer;
-}
-
-.close-modal:hover {
-  background-color: #ccc;
-}*/
