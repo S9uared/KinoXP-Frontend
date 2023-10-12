@@ -301,6 +301,60 @@ button:hover {
   color: var(--primary-color);
 }
 
+.create-theater-input {
+  margin-top: 5px;
+}
+#theater-outerbox {
+  margin-top: 50px;
+}
+.theater-box {
+  border: 1px solid grey;
+  box-shadow: 10px 10px 8px #888888;
+  margin: 20px 20px 0 0;
+  padding: 20px;
+  float: left;
+}
+
+#table-rows td {
+  max-width: 150px;
+}
+
+.movie-rows {
+  color: white;
+  max-height: 50px;
+  overflow-y: hidden;
+}
+
+#showings-outerbox {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 50px;
+  width: 100%;
+  justify-content: flex-start;
+}
+
+.showing-box {
+  border: 1px solid grey;
+  box-shadow: 10px 10px 8px #888888;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: 22%;
+  margin: 1rem;
+}
+
+.manage-showing-btn button {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+/* [id*="error"] {
+  display: none;
+  color: red;
+  border: 2px solid red;
+} */
+
 .close:hover {
   color: var(--tertiary-color);
 }
