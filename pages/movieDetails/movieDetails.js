@@ -4,7 +4,6 @@ import {
   sanitizeStringWithTableRows,
   handleHttpErrors,
 } from "../../utils.js";
-import { initReservation } from "../addBooking/addReservation.js";
 
 const URL = API_URL + "/movies";
 const seatUrl = API_URL + "/seats";
