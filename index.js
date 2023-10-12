@@ -4,28 +4,27 @@ import { initMovieSeats } from "./pages/showSeats/seats.js";
 import { initLogin, logout, toggleLoginStatus } from "./pages/login/login.js";
 import { initStatistics } from "./pages/showStatistic/statistic.js";
 import { initEmpProgram } from "./pages/employeeProgram/employeeProgram.js";
+import { initTheaters } from "./pages/manageTheaters/theater.js";
+import { initManageMovies } from "./pages/manageMovies/manageMovies.js";
 
-window.addEventListener("load", async () => {
-  //Add html pages in this format for client redirect
-  //const templateCars = await loadHtml("./pages/cars/cars.html")
-  const templateFrontPage = await loadHtml("./pages/frontpage/frontpage.html");
-  const templateProgram = await loadHtml("./pages/program/program.html");
-  const templateMovieSchedule = await loadHtml(
-    "./pages/showMovieSchedule/schedule.html"
-  );
-  const templateMovieSeats = await loadHtml("./pages/showSeats/seats.html");
-  const templateBooking = await loadHtml("./pages/addBooking/booking.html");
-  const templateStatistic = await loadHtml(
-    "./pages/showStatistic/statistic.html"
-  );
-  const templateLogin = await loadHtml("./pages/login/login.html");
-  const templateEmpProgram = await loadHtml(
-    "./pages/employeeProgram/employeeProgram.html"
-  );
-  const templateNotFound = await loadHtml("./pages/notFound/notFound.html");
-  //If token existed, for example after a refresh, set UI accordingly
-  const token = localStorage.getItem("token");
-  toggleLoginStatus(token);
+    window.addEventListener("load", async () => {
+        
+        //Add html pages in this format for client redirect  
+        //const templateCars = await loadHtml("./pages/cars/cars.html")
+        const templateFrontPage = await loadHtml("./pages/frontpage/frontpage.html")
+        const templateProgram = await loadHtml("./pages/program/program.html")
+        const templateMovieSchedule = await loadHtml("./pages/showMovieSchedule/schedule.html")
+        const templateMovieSeats = await loadHtml("./pages/showSeats/seats.html")
+        const templateBooking = await loadHtml("./pages/addBooking/booking.html")
+        const templateTheaters = await loadHtml("./pages/manageTheaters/theater.html")
+        const templateEmpProgram = await loadHtml("./pages/employeeProgram/employeeProgram.html");
+        const templateMovies = await loadHtml("./pages/manageMovies/manageMovies.html")
+        const templateStatistic = await loadHtml("./pages/showStatistic/statistic.html") 
+        const templateLogin = await loadHtml("./pages/login/login.html")
+        const templateNotFound = await loadHtml("./pages/notFound/notFound.html")
+        //If token existed, for example after a refresh, set UI accordingly
+        const token = localStorage.getItem("token")
+        toggleLoginStatus(token)
 
   const router = new Navigo("/", { hash: true });
   //Not especially nice, BUT MEANT to simplify things. Make the router global so it can be accessed from all js-files
@@ -68,12 +67,7 @@ window.addEventListener("load", async () => {
         renderHtml(templateMovieSeats, "content");
         initMovieSeats();
       },
-
-      "/movie/booking": () => {
-        renderHtml(templateBooking, "content");
-        // initBooking()
-      },
-
+    
       "/employee/login": () => {
         renderHtml(templateLogin, "content");
         initLogin();
@@ -83,10 +77,19 @@ window.addEventListener("load", async () => {
         renderHtml(templateEmpProgram, "content");
         initEmpProgram();
       },
+    
+      "/manage/movies" : () => {
+          renderHtml(templateMovies, "content")
+          initManageMovies()
+      },
+        "/manage/theaters" : () => {
+            renderHtml(templateTheaters, "content")
+            initTheaters()
+       },
 
-      "/statistics": () => {
-        renderHtml(templateStatistic, "content");
-        initStatistics();
+        "/manage/statistics" : () => {
+          renderHtml(templateStatistic, "content")
+          initStatistics()
       },
       "/logout": () => {
         renderHtml(templateLogin, "content");
