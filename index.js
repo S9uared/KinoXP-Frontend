@@ -74,12 +74,12 @@ import { initTheaters } from "./pages/manageTheaters/theater.js";
             initLogin()
         },
 
-        "/theaters" : () => {
+        "/manage/theaters" : () => {
             renderHtml(templateTheaters, "content")
             initTheaters()
         },
 
-        "/statistics" : () => {
+        "/manage/statistics" : () => {
           renderHtml(templateStatistic, "content")
           initStatistics()
       },
