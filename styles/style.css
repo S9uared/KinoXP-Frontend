@@ -166,3 +166,14 @@ html {
   padding:20px;
   float:left;
 }
+
+
+#table-rows td{
+  max-width:150px;
+}
+
+.movie-rows{
+  color:white;
+  max-height:50px;
+  overflow-y: hidden;
+}

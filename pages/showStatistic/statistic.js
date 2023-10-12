@@ -28,7 +28,6 @@ async function createMovieDivs(){
     try{
         const statData = await fetch(url, makeOptions("GET", null, true)).then(handleHttpErrors)
         const filteredStats = removeDuplicates(statData);
-        console.log(filteredStats);
         const tableRows = filteredStats.map(stat => 
                 `<tr>
                 <td>${stat.movieId}</td>
