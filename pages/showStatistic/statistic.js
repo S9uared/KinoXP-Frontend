@@ -47,6 +47,10 @@ async function createMovieDivs(){
 
 
 function setupGraphFromStats(stats){
+    const activeChart = Chart.getChart("statistic-chart")
+    if(activeChart){
+        activeChart.destroy();
+    }
     document.getElementById("graph-box").style.display = "block";
     const xValues = []
     const yValues = []
