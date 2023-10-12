@@ -153,3 +153,16 @@ html {
   display:hidden;
 
 }
+.create-theater-input{
+  margin-top:5px;
+}
+#theater-outerbox{
+  margin-top:50px;
+}
+.theater-box{
+  border: 1px solid grey;
+  box-shadow: 10px 10px 8px #888888;
+  margin: 20px 20px 0 0 ;
+  padding:20px;
+  float:left;
+}
