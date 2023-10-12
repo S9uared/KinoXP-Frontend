@@ -28,6 +28,13 @@ export async function initMovieDetails(match) {
       () => (document.getElementById("modal").style.display = "block")
     );
 
+    const closeButton = document.getElementById('close-button');
+    const modal = document.querySelector('.modalbox');
+
+    closeButton.addEventListener('click', () => {
+      modal.style.display = 'none';
+    });
+
   seatOuterBox = document.getElementById("seats-outerbox");
   seatOuterBox.addEventListener("click", updateSeatList);
   if (match?.params?.id && match?.params?.date) {
