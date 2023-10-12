@@ -2,6 +2,7 @@ import "./navigo_EditedByLars.js"; //Will create the global Navigo, with a few c
 import { setActiveLink, loadHtml, renderHtml } from "./utils.js";
 import { initProgram } from "./pages/program/program.js";
 import { initMovieDetails } from "./pages/movieDetails/movieDetails.js";
+import { initFutureMovies } from "./pages/futureMovies/futureMovies.js";
 import { initEmpProgram } from "./pages/employeeProgram/employeeProgram.js";
 import { initManageMovies } from "./pages/manageMovies/manageMovies.js";
 import { initTheaters } from "./pages/manageTheaters/theater.js";
@@ -14,12 +15,14 @@ window.addEventListener("load", async () => {
 
   const templateProgram = await loadHtml("./pages/program/program.html");
   const templateMovieDetails = await loadHtml("./pages/movieDetails/movieDetails.html");
+  const templateFutureMovies = await loadHtml("./pages/futureMovies/futureMovies.html")
   const templateEmpProgram = await loadHtml("./pages/employeeProgram/employeeProgram.html")
   const templateMovies = await loadHtml("./pages/manageMovies/manageMovies.html")
   const templateTheaters = await loadHtml("./pages/manageTheaters/theater.html")
   const templateStatistic = await loadHtml("./pages/showStatistic/statistic.html")
   const templateLogin = await loadHtml("./pages/login/login.html");
   const templateNotFound = await loadHtml("./pages/notFound/notFound.html");
+  
 
   //If token existed, for example after a refresh, set UI accordingly
   const token = localStorage.getItem("token");
@@ -45,6 +48,11 @@ window.addEventListener("load", async () => {
       "/movie-details": (match) => {
         renderHtml(templateMovieDetails, "content");
         initMovieDetails(match);
+      },
+
+      "/futuremovies":() => {
+        renderHtml(templateFutureMovies, "content");
+        initFutureMovies()
       },
 
       "/manage/program": () => {

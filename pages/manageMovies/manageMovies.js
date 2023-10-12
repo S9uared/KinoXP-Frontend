@@ -16,11 +16,10 @@ async function fetchMovies(){
             imdbIdS.push(movie.imdbID)
             movieIds.push(movie.id)
             return `<tr class="movie-rows">
-            <td>${movie.imdbID}</td>
-            <td>${movie.Title}</td>
-            <td>${movie.Plot}</td>
-            <td>${movie.Released}</td>
-            <td>${movie.imdbRating}</td>
+            <td><p>${movie.imdbID}</p></td>
+            <td><p>${movie.Title}</p></td>
+            <td><p>${movie.Released}</p></td>
+            <td><p>${movie.imdbRating}</p></td>
             <td><button id="delete_${movie.id}">Delete</button></td>
             </tr>`
         }).join("");

@@ -204,7 +204,12 @@ async function makeReservation() {
   const reservationUrl = API_URL + "/reservations";
   const options = makeOptions("POST", reservation, false);
   await fetch(reservationUrl, options).then(handleHttpErrors);
+  alert("Reservation confirmed. \nConfirmation has been sent to the provided e-mail")
   document.getElementById("modal").style.display = "none";
+  document.getElementById("firstName").value = ""
+  document.getElementById("lastName").value = ""
+  document.getElementById("phone").value = ""
+  document.getElementById("email").value = ""
   window.router.navigate("/");
 }
 
