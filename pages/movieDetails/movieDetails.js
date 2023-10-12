@@ -4,6 +4,7 @@ import {
   sanitizeStringWithTableRows,
   handleHttpErrors,
 } from "../../utils.js";
+import { initReservation } from "../addBooking/addReservation.js";
 
 const URL = API_URL + "/movies";
 const seatUrl = API_URL + "/seats";
@@ -11,12 +12,31 @@ let reserveSeatList = [];
 let theater;
 let showing;
 let seatOuterBox;
+let showingId;
 
 export async function initMovieDetails(match) {
   document.getElementById("seat-div-box").style.display = "none";
-  document.getElementById("showing-details").addEventListener("click",getShowingId)
-  seatOuterBox = document.getElementById("seats-outerbox")
-  seatOuterBox.addEventListener("click", updateSeatList)
+  document.getElementById("modal").style.display = "none";
+
+  document
+    .getElementById("showing-details")
+    .addEventListener("click", getShowingId);
+  document
+    .getElementById("confirm-seats-btn")
+    .addEventListener(
+      "click",
+      () => (document.getElementById("modal").style.display = "block")
+    );
+
+    const closeButton = document.getElementById('close-button');
+    const modal = document.querySelector('.modalbox');
+
+    closeButton.addEventListener('click', () => {
+      modal.style.display = 'none';
+    });
+
+  seatOuterBox = document.getElementById("seats-outerbox");
+  seatOuterBox.addEventListener("click", updateSeatList);
   if (match?.params?.id && match?.params?.date) {
     const id = match.params.id;
     const date = match.params.date;
@@ -26,7 +46,9 @@ export async function initMovieDetails(match) {
   }
 }
 
-const navigoRoute = "movie-details";
+export function getSeatList() {
+  return reserveSeatList;
+}
 
 async function fetAndRenderMovie(idFromUrl, dateFromUrl) {
   try {
@@ -44,7 +66,7 @@ async function fetAndRenderMovie(idFromUrl, dateFromUrl) {
         class="movie-pic"
         />
         <div class="movie-card-content">
-            <h6 class="movie-title">${movie.Title}</h6>          
+            <h1 id="movie-title" class="movie-title">${movie.Title}</h6>          
             <p class="movie-runtime">Runtime: ${movie.Runtime}</p>
             <p class="movie-runtime">Genre: ${movie.Genre}</p>
             <p class="movie-runtime">Director: ${movie.Director}</p>
@@ -71,32 +93,23 @@ async function fetAndRenderMovie(idFromUrl, dateFromUrl) {
   }
 }
 
-export function getShowingId(evt) {
-  
+function getShowingId(evt) {
   const target = evt.target;
   if (!target.id.includes("showing_")) {
     return;
   }
-  const showingId = target.id.replace("showing_", "");
-  setupSeats(showingId)
+  showingId = target.id.replace("showing_", "");
+  setupSeats(showingId);
   document.getElementById("seat-div-box").style.display = "block";
 }
 
 //Seats.js
-// 
-// 
-// 
-
-export function getSeatList() {
-  return reserveSeatList;
-}
-
 
 async function setupSeats(showId) {
   //Assuming each seat needs a 20px width/height box, and a little extra for space between seats.
-  
-  reserveSeatList = []
-  
+
+  reserveSeatList = [];
+
   try {
     showing = await fetchShow(showId);
     theater = await fetchTheater(showing.theaterId); //showing.theaterId
@@ -113,8 +126,6 @@ async function setupSeats(showId) {
   const boxRows = theater.rows;
   seatOuterBox.style.gridTemplateColumns = "repeat(" + boxColumns + ", 1fr)";
   seatOuterBox.style.gridTemplateRows = "repeat(" + boxRows + ", 1fr)";
-
-  //theater.id sættes ind her - 1 er som test data
 }
 
 async function fetchShow(showId) {
@@ -156,7 +167,6 @@ async function fetchSeatsInTheater(showing) {
 }
 
 async function findOccupiedSeats(showingId) {
-  //Add showingId parameter to fetch
   const resUrl = API_URL + "/reservations/showing/" + showingId;
   const occupiedSeats = await fetch(resUrl).then(handleHttpErrors);
   return occupiedSeats;

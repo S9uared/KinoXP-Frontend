@@ -1,14 +1,34 @@
 <div class="template">
-  <h1>Movie Page</h1>
   <div id="movie-details" class="movies"></div>
   <div id="showing-details" class="showing-details"></div>
-  
-  <div id="seat-div-box" style="display:hidden">
-    <h1>Choose seats</h1>
-    <img src="../../images/movie-canvas.PNG" alt="Biograf-lærred">
-    <div id="seats-outerbox" style="display:grid">
-        Place seats in here via innerhtml through script
+
+  <!-- SEATS -->
+  <div class="seat-box">
+    <div id="seat-div-box">
+      <div class="center-content">
+        <img src="../../images/canvaspremium.png" alt="Cinema Canvas" class="movie-canvas" />
+        <div id="seats-outerbox">
+          Place seats in here via innerHTML through script
+        </div>
+        <button id="confirm-seats-btn">Reserve</button>
+      </div>
     </div>
-    <button href="/movie/reservation" id="confirm-seats-btn">Confirm seats</button>
   </div>
+  
+
+   <!-- RESERVATION -->
+   <div id="modal" class="modalbox">
+    <div class="modal-content">
+        <span class="close" id="close-button">×</span>
+        <label for="firstName">First Name</label><br />
+        <input type="text" id="firstName" name="firstName" required /><br />
+        <label for="lastName">Last Name</label><br />
+        <input type="text" id="lastName" name="lastName" required /><br />
+        <label for="phone">Phone</label><br />
+        <input type="phone" id="phone" name="phone" required /><br />
+        <label for="email">Email</label><br />
+        <input type="email" id="email" name="email" required /><br />
+        <button type="submit" id="make-reservation-btn">Confirm</button>
+    </div>
+</div>
 </div>
