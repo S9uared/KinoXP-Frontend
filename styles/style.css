@@ -136,8 +136,13 @@ h2 {
 /* Program */
 .datepicker {
   display: flex;
-  margin-left: 4rem;
+  justify-content: center;
+  align-items: center;
+  padding-top: 50px;
+  padding-bottom: 50px;
   font-size: x-large;
+  border-top: 3px solid var(--primary-color);
+  border-bottom: 3px solid var(--primary-color);
 }
 
 .showings {
