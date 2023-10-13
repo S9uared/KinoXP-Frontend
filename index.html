@@ -33,19 +33,20 @@
                 <a class="nav-link" href="/futuremovies" data-navigo>FUTURE MOVIES</a>
               </li>
 
-              <li class="nav-item dropdown admin-only">
+              <li class="nav-item dropdown user-only">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
                   aria-expanded="false">
                   Manage
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
-                  <li><a class="dropdown-item" href="/manage/theaters" data-navigo>Theaters</a></li>
-                  <li><a class="dropdown-item" href="/manage/movies" data-navigo>Movies</a></li>
-                  <li><a class="dropdown-item" href="/manage/program" data-navigo>Showings</a></li>
+                  <li><a class="dropdown-item" href="/manage/reservations" data-navigo>Reservations</a></li>
+                  <li><a class="dropdown-item admin-only" href="/manage/theaters" data-navigo>Theaters</a></li>
+                  <li><a class="dropdown-item admin-only" href="/manage/movies" data-navigo>Movies</a></li>
+                  <li><a class="dropdown-item admin-only" href="/manage/program" data-navigo>Showings</a></li>
                   <li>
-                    <hr class="dropdown-divider">
+                    <hr class="dropdown-divider admin-only">
                   </li>
-                  <li><a class="dropdown-item" href="/manage/statistics" data-navigo>Statistics</a></li>
+                  <li><a class="dropdown-item admin-only" href="/manage/statistics" data-navigo>Statistics</a></li>
                 </ul>
               </li>
               <li class="nav-item">

@@ -8,6 +8,7 @@ import { initManageMovies } from "./pages/manageMovies/manageMovies.js";
 import { initTheaters } from "./pages/manageTheaters/theater.js";
 import { initStatistics } from "./pages/showStatistic/statistic.js";
 import { initLogin, logout, toggleLoginStatus } from "./pages/login/login.js";
+import { initReservations } from "./pages/manageReservations/reservations.js";
 
 window.addEventListener("load", async () => {
   //Add html pages in this format for client redirect
@@ -16,13 +17,14 @@ window.addEventListener("load", async () => {
   const templateProgram = await loadHtml("./pages/program/program.html");
   const templateMovieDetails = await loadHtml("./pages/movieDetails/movieDetails.html");
   const templateFutureMovies = await loadHtml("./pages/futureMovies/futureMovies.html")
+  const templateReservations = await loadHtml("./pages/manageReservations/reservations.html")
   const templateEmpProgram = await loadHtml("./pages/employeeProgram/employeeProgram.html")
   const templateMovies = await loadHtml("./pages/manageMovies/manageMovies.html")
   const templateTheaters = await loadHtml("./pages/manageTheaters/theater.html")
   const templateStatistic = await loadHtml("./pages/showStatistic/statistic.html")
   const templateLogin = await loadHtml("./pages/login/login.html");
   const templateNotFound = await loadHtml("./pages/notFound/notFound.html");
-  
+
 
   //If token existed, for example after a refresh, set UI accordingly
   const token = localStorage.getItem("token");
@@ -55,7 +57,12 @@ window.addEventListener("load", async () => {
         initFutureMovies()
       },
 
-      "/manage/program": () => {
+      "/manage/reservations" : () => {
+        renderHtml(templateReservations, "content");
+        initReservations()
+      },
+      
+      "/manage/program" : () => {
         renderHtml(templateEmpProgram, "content");
         initEmpProgram();
       },
