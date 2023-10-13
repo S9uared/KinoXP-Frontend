@@ -57,21 +57,20 @@ async function findShowingsByDate() {
     const cards = showings
       .map(
         (showing) => `      
-              <div id="showing-movieId-${showing.movie.id}" class="showing-card">
-              <a class="nav-link" href="/movie-details" data-navigo>
-                  <img 
-                  src="${showing.movie.Poster}" 
-                  loading="lazy"
-                  class="showing-pic"
-                  />
-              </a>    
-                  <div class="showing-card-content">
-                      <h6 class="showing-title">${showing.movie.Title}</h6>
-                      <p class="showing-runtime">Runtime: ${showing.movie.Runtime}</p>
-                      <p class="showing-runtime">Date: ${showing.date}</p>
-                      <p class="showing-runtime">Time: ${showing.time}</p>
-                  </div>
-              </div>          
+        <div class="showing-card">
+        <img id="movie_${showing.movie.id}"
+        src="${showing.movie.Poster}" 
+        loading="lazy"
+        class="showing-pic"
+        data-date="${showing.date}"
+        />
+        <div class="showing-card-content">
+            <h6 class="showing-title">${showing.movie.Title}</h6>
+            <p class="showing-runtime">Runtime: ${showing.movie.Runtime}</p>
+            <p class="showing-runtime">Date: ${showing.date}</p>
+            <p class "showing-runtime">Time: ${showing.time}</p>
+        </div>
+    </div>             
         `
       )
       .join("");
@@ -134,4 +133,3 @@ async function showMovieDetails(evt) {
 }
 
 //slideshow
-
