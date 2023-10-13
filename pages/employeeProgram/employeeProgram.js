@@ -66,6 +66,8 @@ async function renderShowings() {
             <input class="showing-input" id="cleaning_${
               showing.id
             }" type="number">
+            <label for="ending-time">Ending Time</label>
+            <p class="showing-input" id="ending-time">${showing.endingTime}</p>
             <div>
             <label for="premiere_${showing.id}">Premiere</label>
             <input class="showing-input" id="premiere_${
@@ -148,7 +150,6 @@ async function addShowing() {
     theaterId: theaterId,
     cleaningTime: cleaningTime,
   };
-  let errorMessage;
 
   try {
     await fetch(URL_SHOWINGS, makeOptions("POST", addShowing, true)).then(
