@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Pirata+One|Rubik:900');
+
 /* Resetting styles */
 * {
   margin: 0;
@@ -33,9 +34,6 @@ body {
   font-size: 1rem;
   line-height: 1.5;
   overflow-x: hidden;
-}
-
-html {
   scroll-behavior: smooth;
 }
 
@@ -68,19 +66,18 @@ h1 {
   font-family: Rubik, sans-serif;
   font-size: 70px;
   font-weight: 600;
-  background-image:linear-gradient( 86.3deg,  rgba(0,119,182,1) 3.6%, rgba(8,24,68,1) 87.6% );
+  background-image: linear-gradient(86.3deg, rgba(0,119,182,1) 3.6%, rgba(8,24,68,1) 87.6%);
   color: transparent;
-  background-clip: text;  
+  background-clip: text;
   -webkit-background-clip: text;
-  -webkit-text-stroke: 2px rgba(255, 255, 255, 0.5); /* Add an outline (shadow) around the text */
-  
+  -webkit-text-stroke: 2px rgba(255, 255, 255, 0.5);
 }
 
 h2 {
   color: var(--secondary-color);
 }
 
-.program-heading{
+.program-heading {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -281,23 +278,24 @@ button:hover {
   margin-bottom: -30px;
 }
 
-.modal-content input{
-  border:0;
-  border-bottom:3px solid var(--primary-color);  
-  background:transparent;
-  width:100%;
-  padding:5px 0 2px 0;
-  font-size:25px;
-  color:#fff;
+.modal-content input {
+  border: 0;
+  border-bottom: 3px solid var(--primary-color);
+  background: transparent;
+  width: 100%;
+  padding: 5px 0 2px 0;
+  font-size: 25px;
+  color: #fff;
 }
 
-.modal-content input:focus{ 
- border:none;	
- outline:none;
- border-bottom:3px solid var(--tertiary-color);	
-} 
+.modal-content input:focus {
+  border: none;
+  outline: none;
+  border-bottom: 3px solid var(--tertiary-color);
+}
 
-/*.modal-content input,*/
+/* Remove duplicated comments from this section */
+.modal-content input,
 .modal-content button {
   display: block;
   width: 100%;
@@ -313,6 +311,10 @@ button:hover {
   color: var(--primary-color);
 }
 
+.close:hover {
+  color: var(--secondary-color);
+}
+
 .create-theater-input {
   margin-top: 5px;
 }
@@ -322,8 +324,8 @@ button:hover {
 }
 
 .theater-box {
-  border: 1px solid grey;
-  box-shadow: 10px 10px 8px #888888;
+  border: 1px solid var(--bg-color);
+  box-shadow: var(--box-shadow);
   margin: 20px 20px 0 0;
   padding: 20px;
   float: left;
@@ -428,6 +430,7 @@ img.errorimg {
   }
 }
 
+/* Adjusted label margin */
 .datepicker label {
-  margin-right: 30px; /* Adjust the margin as needed */
+  margin-right: 30px;
 }

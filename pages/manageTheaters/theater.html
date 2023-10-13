@@ -1,16 +1,18 @@
 <div class="template">
-    <h1>Theaters</h1>
+    <h1>Theatres</h1>
     <button id="create-theater-btn">Create</button>
     <div id="theater-outerbox">
     </div>
-    <div id="modal">
-        <h2>Create a new theater</h2>
-        <input type="number" class="create-theater-input" id="create-theater-id" placeholder="Theater Id" required><br>
-        <input type="number" class="create-theater-input" id="create-theater-rows" placeholder="Amount of rows" required><br>
-        <input type="number" class="create-theater-input" id="create-theater-seats" placeholder="Seats per row" required><br><br>
-        <p id="create-theater-fail" style="color:red"></p>
-        <button id="create-theater-submit">Create</button>        
-        <button id="create-theater-cancel">Cancel</button>
-
+    <div id="modal" class="modalbox">
+      <div class="modal-content">
+          <h2>Create a new theatre</h2>
+          <span class="close" id="close-button">×</span>
+          <input type="number" class="create-theater-input" id="create-theater-id" placeholder="Theater Id" required><br>
+          <input type="number" class="create-theater-input" id="create-theater-rows" placeholder="Amount of rows" required><br>
+          <input type="number" class="create-theater-input" id="create-theater-seats" placeholder="Seats per row" required><br><br>
+          <p id="create-theater-fail" style="color:red"></p>
+          <button id="create-theater-submit">Create</button>        
+          <!-- <button id="create-theater-cancel">Cancel</button> -->
       </div>
+    </div>
 </div>

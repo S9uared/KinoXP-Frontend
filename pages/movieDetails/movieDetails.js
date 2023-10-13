@@ -46,7 +46,6 @@ export async function initMovieDetails(match) {
   }
 }
 
-
 async function fetAndRenderMovie(idFromUrl, dateFromUrl) {
   try {
     const movie = await fetch(URL + "/" + idFromUrl).then(handleHttpErrors);
@@ -99,8 +98,6 @@ function getShowingId(evt) {
   setupSeats(showingId);
   document.getElementById("seat-div-box").style.display = "block";
 }
-
-//Seats.js
 
 async function setupSeats(showId) {
   //Assuming each seat needs a 20px width/height box, and a little extra for space between seats.
