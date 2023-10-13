@@ -26,14 +26,16 @@ export async function initMovieDetails(match) {
       "click",
       () => (document.getElementById("modal").style.display = "block")
     );
-  document.getElementById("make-reservation-btn").addEventListener("click", makeReservation)
+  document
+    .getElementById("make-reservation-btn")
+    .addEventListener("click", makeReservation);
 
-    const closeButton = document.getElementById('close-button');
-    const modal = document.querySelector('.modalbox');
+  const closeButton = document.getElementById("close-button");
+  const modal = document.querySelector(".modalbox");
 
-    closeButton.addEventListener('click', () => {
-      modal.style.display = 'none';
-    });
+  closeButton.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
 
   seatOuterBox = document.getElementById("seats-outerbox");
   seatOuterBox.addEventListener("click", updateSeatList);
@@ -45,7 +47,6 @@ export async function initMovieDetails(match) {
     fetAndRenderMovie(id, date);
   }
 }
-
 
 async function fetAndRenderMovie(idFromUrl, dateFromUrl) {
   try {
@@ -192,24 +193,28 @@ async function makeReservation() {
     showingId: showingId,
     seatIds: reserveSeatList,
   };
-  if(reserveSeatList.length < 1){
-    document.getElementById("reservation-failure").innerText = "Please choose seats for your reservation"
+  if (reserveSeatList.length < 1) {
+    document.getElementById("reservation-failure").innerText =
+      "Please choose seats for your reservation";
     return;
   }
-  if(!collectCustomerInfo(reservation)){
-    document.getElementById("reservation-failure").innerText = "Please enter all of your information"
+  if (!collectCustomerInfo(reservation)) {
+    document.getElementById("reservation-failure").innerText =
+      "Please enter all of your information";
     return;
   }
 
   const reservationUrl = API_URL + "/reservations";
   const options = makeOptions("POST", reservation, false);
   await fetch(reservationUrl, options).then(handleHttpErrors);
-  alert("Reservation confirmed. \nConfirmation has been sent to the provided e-mail")
+  alert(
+    "Reservation confirmed. \nConfirmation has been sent to the provided e-mail. \nREMEMBER TO CHECK YOUR SPAM"
+  );
   document.getElementById("modal").style.display = "none";
-  document.getElementById("firstName").value = ""
-  document.getElementById("lastName").value = ""
-  document.getElementById("phone").value = ""
-  document.getElementById("email").value = ""
+  document.getElementById("firstName").value = "";
+  document.getElementById("lastName").value = "";
+  document.getElementById("phone").value = "";
+  document.getElementById("email").value = "";
   window.router.navigate("/");
 }
 
@@ -218,8 +223,13 @@ function collectCustomerInfo(reservation) {
   reservation.lastName = document.getElementById("lastName").value;
   reservation.phoneNumber = document.getElementById("phone").value;
   reservation.email = document.getElementById("email").value;
-  if(!reservation.firstName || !reservation.lastName || !reservation.phoneNumber || !reservation.email){
-    return false
+  if (
+    !reservation.firstName ||
+    !reservation.lastName ||
+    !reservation.phoneNumber ||
+    !reservation.email
+  ) {
+    return false;
   }
   return true;
 }
