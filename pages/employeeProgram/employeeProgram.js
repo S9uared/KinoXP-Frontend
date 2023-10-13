@@ -118,18 +118,22 @@ async function deleteShowing(evt) {
   const showingId = clicked.id.replace("showing-delete-btn_", "");
 
   if (window.confirm(`Are you sure you want to delete showing ${showingId}?`)) {
-    const response = await fetch(
-      URL_SHOWINGS + "/" + showingId,
-      makeOptions("DELETE", false, true)
-    );
-    if (response.ok) {
-      // Successful deletion, you can handle it here
-      renderShowings();
-    } else {
-      // Handle non-successful response (e.g., error message from the server)
-      const errorData = await response.json();
-      document.getElementById("error_" + showingId).innerText =
-        errorData.message;
+    try {
+      const response = await fetch(
+        URL_SHOWINGS + "/" + showingId,
+        makeOptions("DELETE", false, true)
+      );
+      if (response.ok) {
+        // Successful deletion, you can handle it here
+        renderShowings();
+      } else {
+        // Handle non-successful response (e.g., error message from the server)
+        const errorData = await response.json();
+        document.getElementById("error_" + showingId).innerText =
+          errorData.message;
+      }
+    } catch (err) {
+      console.error(err);
     }
   }
 }
