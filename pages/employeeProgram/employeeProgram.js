@@ -66,7 +66,7 @@ async function renderShowings() {
             <input class="showing-input" id="cleaning_${
               showing.id
             }" type="number">
-            <label for="ending-time">Ending Time</label>
+            <label for="ending-time">Theatre Ready</label>
             <p class="showing-input" id="ending-time">${showing.endingTime}</p>
             <div>
             <label for="premiere_${showing.id}">Premiere</label>
