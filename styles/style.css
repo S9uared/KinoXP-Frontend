@@ -1,12 +1,12 @@
 @import url('https://fonts.googleapis.com/css?family=Pirata+One|Rubik:900');
 
-/* Resetting styles */
+/*----- RESETS -----*/
 * {
   margin: 0;
   padding: 0;
 }
 
-/* Variables */
+/*----- GENERAL -----*/
 :root {
   --bg-color: #181b23;
   --primary-color: #e1def5;
@@ -18,7 +18,25 @@
   --box-shadow: 0px 14px 20px 5px rgba(0, 0, 0, 0.42);
 }
 
-/* General styles */
+body {
+  background-color: var(--bg-color);
+  font: 1rem "Gill Sans", sans-serif;
+  line-height: 1.5;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+h1 {
+  font-family: Rubik, sans-serif;
+  font-size: 70px;
+  font-weight: 600;
+  background-image: linear-gradient(86.3deg, rgba(0,119,182,1) 3.6%, rgba(8,24,68,1) 87.6%);
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-stroke: 2px rgba(255, 255, 255, 0.5);
+}
+
 a {
   text-decoration: none;
 }
@@ -28,16 +46,7 @@ p {
   color: var(--primary-color);
 }
 
-body {
-  /*font-family: "Gill Sans", sans-serif;*/
-  background-color: var(--bg-color);
-  font-size: 1rem;
-  line-height: 1.5;
-  overflow-x: hidden;
-  scroll-behavior: smooth;
-}
-
-/* Navbar styles */
+/*----- HEADER -----*/
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -57,34 +66,17 @@ body {
   margin: 0 2.5rem;
 }
 
+/*----- MOVIES -----*/
+#movielist-outerbox {
+  width: 80%;
+  height: auto;
+}
+
 #movie-title {
   position: relative;
   justify-content: center;
 }
 
-h1 {
-  font-family: Rubik, sans-serif;
-  font-size: 70px;
-  font-weight: 600;
-  background-image: linear-gradient(86.3deg, rgba(0,119,182,1) 3.6%, rgba(8,24,68,1) 87.6%);
-  color: transparent;
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-stroke: 2px rgba(255, 255, 255, 0.5);
-}
-
-h2 {
-  color: var(--secondary-color);
-}
-
-.program-heading {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 50px;
-}
-
-/* Movie Page */
 .movie-card-content {
   display: flex;
   flex-direction: column;
@@ -99,9 +91,21 @@ h2 {
   margin: 2rem;
 }
 
+/*----- SEATS -----*/
 #seats-outerbox {
   display: grid;
   padding: 20px;
+}
+
+.seat-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+#seat-div-box {
+  display: hidden;
 }
 
 .seat-div {
@@ -112,11 +116,7 @@ h2 {
   border-radius: 2px;
 }
 
-#movielist-outerbox {
-  width: 80%;
-  height: auto;
-}
-
+/*----- STATISTICS -----*/
 #graph-box {
   display: none;
   background-color: white;
@@ -133,11 +133,32 @@ h2 {
   padding-top: 20px;
 }
 
-/* Program */
+/*----- PROGRAM -----*/
+.program-heading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 50px;
+}
+
+.program-content {
+  position: relative;
+  top: 110%;
+  transform: translateY(0);
+}
+
 .datepicker {
   display: flex;
-  margin-left: 4rem;
+  justify-content: center;
+  align-items: center;
+  padding: 50px 0;
   font-size: x-large;
+  border-top: 3px solid var(--primary-color);
+  border-bottom: 3px solid var(--primary-color);
+}
+
+.datepicker label {
+  margin-right: 30px;
 }
 
 .showings {
@@ -177,7 +198,6 @@ h2 {
   margin-bottom: auto;
 }
 
-/* Movie Styles */
 .movie-card,
 .showing-details {
   display: flex;
@@ -202,18 +222,6 @@ h2 {
   font-size: 2rem;
 }
 
-label {
-  color: var(--primary-color);
-}
-
-/* Seats */
-.seat-box {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 2rem;
-}
-
 .center-content {
   display: flex;
   flex-direction: column;
@@ -222,16 +230,12 @@ label {
   padding: 2rem;
 }
 
-#seat-div-box {
-  display: hidden;
-}
-
 img.movie-canvas {
   width: 40rem;
   height: auto;
   margin-bottom: 2rem;
 }
-
+/*----- BUTTONS -----*/
 button {
   padding: 10px 50px;
   background-color: var(--bg-color);
@@ -243,6 +247,11 @@ button {
 button:hover {
   background-color: var(--primary-color);
   color: var(--bg-color);
+}
+
+/*----- MODALS -----*/
+label {
+  color: var(--primary-color);
 }
 
 .modalbox {
@@ -294,7 +303,6 @@ button:hover {
   border-bottom: 3px solid var(--tertiary-color);
 }
 
-/* Remove duplicated comments from this section */
 .modal-content input,
 .modal-content button {
   display: block;
@@ -315,10 +323,7 @@ button:hover {
   color: var(--secondary-color);
 }
 
-.create-theater-input {
-  margin-top: 5px;
-}
-
+/*----- THEATRE -----*/
 #theater-outerbox {
   margin-top: 50px;
 }
@@ -331,6 +336,10 @@ button:hover {
   float: left;
 }
 
+.create-theater-input {
+  margin-top: 5px;
+}
+
 #table-rows td {
   max-width: 150px;
 }
@@ -341,6 +350,7 @@ button:hover {
   overflow-y: hidden;
 }
 
+/*----- SHOWINGS -----*/
 #showings-outerbox {
   display: flex;
   flex-wrap: wrap;
@@ -376,13 +386,7 @@ img.errorimg {
   height: 500px;
 }
 
-.program-content {
-  position: relative;
-  top: 110%;
-  transform: translateY(0);
-}
-
-/* Hero section */
+/*----- HERO SECTION -----*/
 .hero {
   position: relative;
   height: 60vh;
@@ -428,9 +432,4 @@ img.errorimg {
     left: 0;
     background-image: url('../images/img7.jpg');
   }
-}
-
-/* Adjusted label margin */
-.datepicker label {
-  margin-right: 30px;
 }
