@@ -43,6 +43,7 @@ function deleteMovie(event){
     if(window.confirm("Are you sure you want to delete this movie?")){
         fetch(movieUrl+"/"+movieId, makeOptions("DELETE", null, true))
     }
+    fetchMovies();
 }
 async function addMovie(){
     document.getElementById("add-movie-failure").innerText = ""
@@ -54,11 +55,10 @@ async function addMovie(){
         } catch(error){
             console.error(error)
         }
+        fetchMovies();
         return;
     } else {
         document.getElementById("imdb-id-input").value = "";
         document.getElementById("add-movie-failure").innerText = "Invalid or duplicate imdbId"
     }
-
-    
 }

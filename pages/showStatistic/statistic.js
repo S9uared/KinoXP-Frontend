@@ -6,6 +6,7 @@ const url = API_URL+"/statistics"
 
 export function initStatistics(){
     createMovieDivs()
+    document.getElementById("update-stat-btn").addEventListener("click", createStatsForPastWeek)
     document.getElementById("movielist-outerbox").addEventListener("click", fetchStatisticsForMovie)
     document.getElementById("graph-box").addEventListener("click", hideGraph)
 }
@@ -14,6 +15,7 @@ function hideGraph(){
     document.getElementById("graph-box").style.display = "none";
     Chart.getChart("statistic-chart").destroy();
 }
+
 async function fetchStatisticsForMovie(event){
     const clickedMovie = event.target;
     const oneMovieUrl = url + "/movie/"+clickedMovie.id;
@@ -25,16 +27,45 @@ async function fetchStatisticsForMovie(event){
     }
 }
 
+
+
+async function createStatsForPastWeek(){
+    const movieUrl = API_URL+"/movies"
+    const movieList = await fetch(movieUrl).then(handleHttpErrors)
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    let mm = today.getMonth() + 1; // Months start at 0!
+    let dd = today.getDate();
+
+    if (dd < 10) dd = '0' + dd;
+    if (mm < 10) mm = '0' + mm;
+    const formattedToday = dd + '-' + mm + '-' + yyyy;
+    
+    try {
+        const createStatResponse = movieList.map(async (movie) => {
+            const newStat = {
+                movieId : movie.id,
+                date : formattedToday
+            }
+            const response = await fetch(url, makeOptions("POST", newStat, true)).then(handleHttpErrors)
+            return response;
+        })
+    } catch (error) {
+        console.error(error)
+    }
+    createMovieDivs()
+}
+
 async function createMovieDivs(){
     try{
         const statData = await fetch(url, makeOptions("GET", null, true)).then(handleHttpErrors)
         const filteredStats = removeDuplicates(statData);
         const tableRows = filteredStats.map(stat => 
                 `<tr>
-                <td>${stat.movieId}</td>
-                <td>${stat.movieName}</td>
-                <td>${stat.date}</td>
-                <td>${stat.totalReservations}%</td>
+                <td><p>${stat.movieId}</p></td>
+                <td><p>${stat.movieName}</p></td>
+                <td><p>${stat.date}</p></td>
+                <td><p>${stat.totalReservations}%</p></td>
                 <td><button id="${stat.movieId}">...</button></td>
                 </tr>`
             ).join("");
@@ -109,14 +140,3 @@ function removeDuplicates(arr) {
       });
     return [...new Map(arr.map(stat => [stat.movieId, stat])).values()]; 
 } 
-function compareFunction(a, b){
-    let date1 = new Date(a);
-    let date2 = new Date(b);
-    if(date1 > date2){
-        return 1;
-    }
-    if(date1 < date2){
-        return -1;
-    }
-    return 0;
-}
