@@ -26,7 +26,7 @@ const movieUrl = API_URL+"/movies"
                 <h6 class="showing-title">${movie.Title}</h6>
                 <p class="showing-runtime">Year: ${movie.Year}</p>
                 <p class="showing-runtime">Date: ${movie.Released}</p>
-                <p class "showing-runtime">Time: ${movie.Genre}</p>
+                <p class "showing-runtime">Genre: ${movie.Genre}</p>
 
             </div>
             </a>
