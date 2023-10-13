@@ -3,8 +3,10 @@ import {handleHttpErrors, makeOptions, sanitizeStringWithTableRows,} from "../..
 const url = API_URL+"/theaters"
 const theaterIds = [];
 export function initTheaters(){
+    document.getElementById("modal").style.display = "none";
     const closeButton = document.getElementById('close-button');
     const modal = document.querySelector('.modalbox');
+    
 
     closeButton.addEventListener('click', () => {
       modal.style.display = 'none';
