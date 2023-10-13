@@ -45,7 +45,7 @@ async function login() {
     localStorage.removeItem("user")
     localStorage.removeItem("roles")
     toggleLoginStatus(false)
-    window.router.navigate("/employee/login")
+    window.router.navigate("/login")
   }
   
   export function toggleLoginStatus(loggedIn) {
@@ -65,7 +65,7 @@ async function login() {
     for (var i = 0; i < adminListItems.length; i++) {
       adminListItems[i].style.display = isAdmin ? "block" : 'none'; // or any other value you want
     }
-    //userRoutes.style.display = isUser ? 'block' : 'none';
+    userRoutes.style.display = isUser ? 'block' : 'none';
     
   }
   
