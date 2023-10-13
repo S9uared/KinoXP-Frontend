@@ -1,12 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Pirata+One|Rubik:900');
 
-/* Resetting styles */
 * {
   margin: 0;
   padding: 0;
 }
 
-/* Variables */
 :root {
   --bg-color: #181b23;
   --primary-color: #e1def5;
@@ -18,7 +16,6 @@
   --box-shadow: 0px 14px 20px 5px rgba(0, 0, 0, 0.42);
 }
 
-/* General styles */
 a {
   text-decoration: none;
 }
@@ -37,7 +34,6 @@ body {
   scroll-behavior: smooth;
 }
 
-/* Navbar styles */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -84,7 +80,6 @@ h2 {
   margin-bottom: 50px;
 }
 
-/* Movie Page */
 .movie-card-content {
   display: flex;
   flex-direction: column;
@@ -133,7 +128,6 @@ h2 {
   padding-top: 20px;
 }
 
-/* Program */
 .datepicker {
   display: flex;
   justify-content: center;
@@ -182,7 +176,6 @@ h2 {
   margin-bottom: auto;
 }
 
-/* Movie Styles */
 .movie-card,
 .showing-details {
   display: flex;
@@ -211,7 +204,6 @@ label {
   color: var(--primary-color);
 }
 
-/* Seats */
 .seat-box {
   display: flex;
   flex-direction: column;
@@ -299,7 +291,6 @@ button:hover {
   border-bottom: 3px solid var(--tertiary-color);
 }
 
-/* Remove duplicated comments from this section */
 .modal-content input,
 .modal-content button {
   display: block;
@@ -387,7 +378,6 @@ img.errorimg {
   transform: translateY(0);
 }
 
-/* Hero section */
 .hero {
   position: relative;
   height: 60vh;
@@ -435,7 +425,6 @@ img.errorimg {
   }
 }
 
-/* Adjusted label margin */
 .datepicker label {
   margin-right: 30px;
 }
