@@ -1,8 +1,12 @@
+@import url('https://fonts.googleapis.com/css?family=Pirata+One|Rubik:900');
+
+/* Resetting styles */
 * {
   margin: 0;
   padding: 0;
 }
 
+/* Variables */
 :root {
   --bg-color: #181b23;
   --primary-color: #e1def5;
@@ -10,28 +14,30 @@
   --tertiary-color: #4c73e9;
   --transparent-bg: rgba(39, 39, 41, 0.98);
   --text-shadow: 2px 2px 4px #151517;
-  --box-shadow: 0px 14px 20px 5px rgba(0,0,0,0.42);
+  --text-shadow-light: 2px 2px 2px rgba(255, 255, 255, 0);
+  --box-shadow: 0px 14px 20px 5px rgba(0, 0, 0, 0.42);
 }
-a{
+
+/* General styles */
+a {
   text-decoration: none;
 }
-p{
+
+p {
   font-size: 1.2rem;
   color: var(--primary-color);
 }
 
 body {
-  font-family: "Gill Sans", sans-serif;
+  /*font-family: "Gill Sans", sans-serif;*/
   background-color: var(--bg-color);
   font-size: 1rem;
   line-height: 1.5;
   overflow-x: hidden;
-}
-
-html {
   scroll-behavior: smooth;
 }
 
+/* Navbar styles */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -46,49 +52,56 @@ html {
   z-index: 100;
 }
 
-.nav-link{
+.nav-link {
   color: var(--primary-color);
-  margin: 0rem 2.5rem 0rem 2.5rem;
+  margin: 0 2.5rem;
 }
 
-#movie-title{
+#movie-title {
   position: relative;
   justify-content: center;
 }
 
 h1 {
+  font-family: Rubik, sans-serif;
   font-size: 70px;
   font-weight: 600;
-  background-image: linear-gradient(to right, var(--tertiary-color) 45%, var(--primary-color) 55%);
+  background-image: linear-gradient(86.3deg, rgba(0,119,182,1) 3.6%, rgba(8,24,68,1) 87.6%);
   color: transparent;
   background-clip: text;
   -webkit-background-clip: text;
+  -webkit-text-stroke: 2px rgba(255, 255, 255, 0.5);
 }
 
-h2{
+h2 {
   color: var(--secondary-color);
 }
 
-/* MOVIE PAGE */
-.movie-card-content{
+.program-heading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 50px;
+}
+
+/* Movie Page */
+.movie-card-content {
   display: flex;
   flex-direction: column;
-  align-items: left; 
+  align-items: left;
   justify-content: center;
   padding: 2rem;
   margin: 2rem;
   margin-right: 10rem;
 }
 
-.movie-pic{
+.movie-pic {
   margin: 2rem;
 }
 
-
-#seats-outerbox{
-    display:grid;
-    padding:20px;
-
+#seats-outerbox {
+  display: grid;
+  padding: 20px;
 }
 
 .seat-div {
@@ -96,32 +109,32 @@ h2{
   height: 25px;
   width: 25px;
   margin: 5px 0 0 5px;
-  border-radius: 2px 2px 2px 2px;
+  border-radius: 2px;
 }
 
-#movielist-outerbox{
-    width:80%;
-    height:auto;
+#movielist-outerbox {
+  width: 80%;
+  height: auto;
 }
 
-#graph-box{
-    display:none;
-    background-color: white;
-    width:700px;
-    height: 380px;
-    position:absolute;
-    bottom:0;
-    right:0;
-    z-index: 5;
+#graph-box {
+  display: none;
+  background-color: white;
+  width: 700px;
+  height: 380px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 5;
 }
 
-#statistic-chart{
-  width:100%;
-  padding-top:20px; 
+#statistic-chart {
+  width: 100%;
+  padding-top: 20px;
 }
 
-/* PROGRAM */
-.datepicker{
+/* Program */
+.datepicker {
   display: flex;
   margin-left: 4rem;
   font-size: x-large;
@@ -144,8 +157,8 @@ h2{
   margin-bottom: 2rem;
 }
 
-.showing-times{
-  padding: 10px 50px 10px 50px;
+.showing-times {
+  padding: 10px 50px;
   color: var(--primary-color);
   border: 2px solid var(--primary-color);
 }
@@ -164,7 +177,7 @@ h2{
   margin-bottom: auto;
 }
 
-/* MOVIESTYLES */
+/* Movie Styles */
 .movie-card,
 .showing-details {
   display: flex;
@@ -184,16 +197,17 @@ h2{
   justify-content: center;
 }
 
-.showing-title{
+.showing-title {
   color: var(--primary-color);
   font-size: 2rem;
 }
 
-label{
+label {
   color: var(--primary-color);
 }
-/* SEATS */
-.seat-box{
+
+/* Seats */
+.seat-box {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -205,21 +219,21 @@ label{
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: 2rem; /* Adjust as needed */
+  padding: 2rem;
 }
 
-#seat-div-box{
-  display:hidden;
+#seat-div-box {
+  display: hidden;
 }
 
 img.movie-canvas {
-  width: 40rem; /* Adjust the width as needed */
+  width: 40rem;
   height: auto;
   margin-bottom: 2rem;
 }
 
-button{
-  padding: 10px 50px 10px 50px;
+button {
+  padding: 10px 50px;
   background-color: var(--bg-color);
   color: var(--primary-color);
   border: 2px solid var(--primary-color);
@@ -233,41 +247,59 @@ button:hover {
 
 .modalbox {
   display: flex;
-  justify-content: center; /* Horizontally center content */
-  align-items: center; /* Vertically center content */
+  justify-content: center;
+  align-items: center;
   position: fixed;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background overlay */
+  background-color: rgba(0, 0, 0, 0.7);
   z-index: 100;
 }
 
 .modal-content {
   background-color: var(--transparent-bg);
-  padding: 20px;
-  max-width: 400px; /* Adjust this value to set the maximum width */
-  width: 90%; /* Adjust this value to set the desired content width */
-  text-align: left; /* Align content to the left */
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
-  position: absolute; /* Position the content within the modal */
-  left: 50%; /* Horizontally center the content */
-  top: 50%; /* Vertically center the content */
-  transform: translate(-50%, -50%); /* Center the content perfectly */
+  padding: 50px;
+  max-width: 400px;
+  width: 90%;
+  text-align: left;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .modal-content label {
   color: var(--primary-color);
   font-size: larger;
-  display: block; /* Display labels as blocks to keep them on the left */
+  display: block;
+  margin-bottom: -30px;
 }
 
+.modal-content input {
+  border: 0;
+  border-bottom: 3px solid var(--primary-color);
+  background: transparent;
+  width: 100%;
+  padding: 5px 0 2px 0;
+  font-size: 25px;
+  color: #fff;
+}
+
+.modal-content input:focus {
+  border: none;
+  outline: none;
+  border-bottom: 3px solid var(--tertiary-color);
+}
+
+/* Remove duplicated comments from this section */
 .modal-content input,
 .modal-content button {
   display: block;
-  width: 100%; /* Make input fields and buttons full-width within the modal content */
-  margin: 5px 0; /* Add space between elements */
+  width: 100%;
+  margin: 5px 0;
 }
 
 .close {
@@ -279,15 +311,21 @@ button:hover {
   color: var(--primary-color);
 }
 
+.close:hover {
+  color: var(--secondary-color);
+}
+
 .create-theater-input {
   margin-top: 5px;
 }
+
 #theater-outerbox {
   margin-top: 50px;
 }
+
 .theater-box {
-  border: 1px solid grey;
-  box-shadow: 10px 10px 8px #888888;
+  border: 1px solid var(--bg-color);
+  box-shadow: var(--box-shadow);
   margin: 20px 20px 0 0;
   padding: 20px;
   float: left;
@@ -327,40 +365,28 @@ button:hover {
   padding-right: 1rem;
 }
 
-/* [id*="error"] {
-  display: none;
-  color: red;
-  border: 2px solid red;
-} */
-
-.close:hover {
-  color: var(--tertiary-color);
-}
-
-.error-container{
+.error-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
-img.errorimg{
+img.errorimg {
   height: 500px;
 }
 
 .program-content {
   position: relative;
-  top: 100%; /* Move the content below the hero section */
+  top: 110%;
   transform: translateY(0);
-  margin-top: 5rem;
 }
 
-/* XO */
-
+/* Hero section */
 .hero {
   position: relative;
-  height: 60vh; /* Adjust the height as needed */
-  background-color: var(--bg-color); /* Set the background color to match your page */
+  height: 60vh;
+  background-color: var(--bg-color);
   animation: imageCycle 60s infinite;
 }
 
@@ -402,4 +428,9 @@ img.errorimg{
     left: 0;
     background-image: url('../images/img7.jpg');
   }
+}
+
+/* Adjusted label margin */
+.datepicker label {
+  margin-right: 30px;
 }

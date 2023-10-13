@@ -101,8 +101,6 @@ function getShowingId(evt) {
   document.getElementById("seat-div-box").style.display = "block";
 }
 
-//Seats.js
-
 async function setupSeats(showId) {
   //Assuming each seat needs a 20px width/height box, and a little extra for space between seats.
 

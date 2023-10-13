@@ -3,13 +3,18 @@ import {handleHttpErrors, makeOptions, sanitizeStringWithTableRows,} from "../..
 const url = API_URL+"/theaters"
 const theaterIds = [];
 export function initTheaters(){
+    const closeButton = document.getElementById('close-button');
+    const modal = document.querySelector('.modalbox');
+
+    closeButton.addEventListener('click', () => {
+      modal.style.display = 'none';
+    });
     fetchTheaters();
     document.getElementById("create-theater-submit").addEventListener("click", addTheater)
     document.getElementById("create-theater-btn").addEventListener("click", function (){
         document.getElementById("modal").style.display = "block"
     })
 }
-
 
 async function fetchTheaters(){
     try{
