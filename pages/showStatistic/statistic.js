@@ -136,7 +136,7 @@ function removeDuplicates(arr) {
     let sortedArr = arr.sort(function(a, b) {
         const dateA = new Date(a.date.split('-').reverse().join('-')); // Convert "dd-MM-yyyy" to "yyyy-MM-dd"
         const dateB = new Date(b.date.split('-').reverse().join('-'));
-        return dateA - dateB; // Compare dateB to dateA for descending order
+        return dateB - dateA; // Compare dateB to dateA for descending order
       });
     return [...new Map(arr.map(stat => [stat.movieId, stat])).values()]; 
 } 

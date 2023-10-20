@@ -17,30 +17,7 @@ function createReservationTable(){
         return
     }
     try{
-        const tableData = filteredList.map((reservation) => {
-            const showingUrl = API_URL+"/showings/"+reservation.showingId;
-                let showing = fetch(showingUrl).then(handleHttpErrors).then(data => {
-                    return data;
-                });
-                const movieUrl = API_URL+"/movies/"+showing.movieId;
-                let movie = fetch(movieUrl).then(handleHttpErrors).then(data => {
-                    return data;
-                });
-    
-        const theaterId = reservation.seats[0].theaterId;
-        const seatPositions = reservation.seats.map(seat => `Row ${seat.rowNumber}, Seat ${seat.seatNumber}`).join('<br> ');
-
-        return `<tr>
-                <td><p>${reservation.customerInfo.phoneNumber}</p></td>
-                <td><p>${reservation.customerInfo.firstName} ${reservation.customerInfo.lastName}</p></td>
-                <td><p>${reservation.id}</p></td>
-                <td><p>${movie.Title}</p></td>
-                <td><p>${showing.date}</p></td>
-                <td><p>${theaterId}</p></td>
-                <td><p>${seatPositions}</p></td>
-                <td><button>Delete</button></td>
-                </tr>`
-        }).join("");
+        const tableData = filteredList.map((reservation) => fetchAndFormatReservation(reservation))
         document.getElementById("table-rows").innerHTML = tableData;
     }catch(error){
         console.error(error)
@@ -49,6 +26,32 @@ function createReservationTable(){
     //Need movie name, showing date,
     //Get showing with showid, and get movie from showing.movieId
     //Already have number, name, reservation id, seats, seats.theaterid 
+}
+
+function fetchAndFormatReservation(reservation){
+    const showingUrl = API_URL+"/showings/"+reservation.showingId;
+        let showing = fetch(showingUrl).then(handleHttpErrors).then(data => {
+            return data;
+        });
+        const movieUrl = API_URL+"/movies/"+showing.movieId;
+        let movie = fetch(movieUrl).then(handleHttpErrors).then(data => {
+            return data;
+        });
+
+const theaterId = reservation.seats[0].theaterId;
+const seatPositions = reservation.seats.map(seat => `Row ${seat.rowNumber}, Seat ${seat.seatNumber}`).join('<br> ');
+
+return `<tr>
+        <td><p>${reservation.customerInfo.phoneNumber}</p></td>
+        <td><p>${reservation.customerInfo.firstName} ${reservation.customerInfo.lastName}</p></td>
+        <td><p>${reservation.id}</p></td>
+        <td><p>${movie.Title}</p></td>
+        <td><p>${showing.date}</p></td>
+        <td><p>${theaterId}</p></td>
+        <td><p>${seatPositions}</p></td>
+        <td><button>Delete</button></td>
+        </tr>`
+    .join("");
 }
 
 async function fetchReservations(){
